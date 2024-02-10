@@ -1,12 +1,21 @@
 #include <stdio.h>
 
 int median(Given_Path) {
-  #Check if the given path is empty, and if so reads from stdin
+  #Check if the given path is empty, and if so, read from stdin
   if (Given_Path == NULL) {
-
+  
   }
   FILE *fd = fopen("" , "r");
-
+  #Check that all the values are in the relevant range
+  for (int i = 1; i <= len; i++) {
+    if (grade[i] > 100 || grade[i] < 0) {
+      printf("Error at line %d: grade %d invalid", i, &grade[i]);
+      return ???
+    }
+  }
+  #Calculate the median
+  int median = -1;
+  
   fclose(fd);
 return median;
 }
