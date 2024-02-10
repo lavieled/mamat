@@ -1,1 +1,12 @@
-#
+#include <stdio.h>
+
+int median(Given_Path) {
+  #Check if the given path is empty, and if so reads from stdin
+  if (Given_Path == NULL) {
+
+  }
+  FILE *fd = fopen("" , "r");
+
+  fclose(fd);
+return median;
+}
