@@ -1,3 +1,6 @@
+// 319046504 laviel@campus.technion.ac.il lavie lederman
+// 206159527 shahary@campus.technion.ac.il shahar yankelovich
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -17,22 +20,23 @@ void parse_arg(int argc, char **argv) {
     for (int i=1; i<argc; ++i) {
         if (!strcmp(argv[i], "-")) {
             f = stdin;
-        } else if (!strcmp(argv[i], "-n_bins")) {
+        } //choose num of bins for hist
+        else if (!strcmp(argv[i], "-n_bins")) {
             nbins = i<argc-1 ? atoi(argv[i+1]): NBINS;
             i++;
-        } else {
+        }
+         else {//open file
             f = fopen(argv[i], "r");
         }
     }
 }
 int main(int argc, char **argv) {
     parse_arg(argc, argv);
-/* Must check for errors... */
-    if (!f) {
+    if (!f) {//check for error
     fprintf(stderr, "File not found: \"%s\"\n", argv[1]);
     return 1;
 }
-/* Initiate array */
+/* Initiate histogram */
     int *bins = (int *)malloc(sizeof(int)*nbins);
     for (int i=0; i<nbins; ++i) {
         bins[i] = 0;
@@ -55,17 +59,17 @@ void operate (int *bins) {
         fprintf(stderr, "Error: not a number\n");
         exit(1);
     }
-/* Find bin */
+//check if input in grade range
     if(grade < MIN_GRADE || grade > MAX_GRADE){
         fprintf(stderr, "Error at line %d: grade %d invalid\n", line, grade);
         exit(1);
     } else{
         line++;
     }
-    int n = grade / (MAX_GRADE / nbins);
+    int n = grade / (MAX_GRADE / nbins);//calc to what bin the grade belongs
     bins [n]++;
-/* Print bins */
-}
+
+}//print bins
     pace = MAX_GRADE /nbins;
     for (int i=0; i<nbins; ++i) {
         printf("%.0lf-%.0lf\t%d\n", i * pace,
