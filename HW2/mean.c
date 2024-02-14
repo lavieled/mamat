@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
+//define grade range
 #define MAX_GRADE 100
 #define MIN_GRADE 0
 
@@ -9,7 +9,7 @@ void mean(FILE *f);
 
 int main(int argc, char **argv) {
     FILE *f;
-
+    //decide input method
     if(argc == 1 || !strcmp("-", argv[1])){
         f = stdin;
     }
@@ -49,5 +49,6 @@ void mean(FILE *f){
         line++;
         }
     }
+    //print the average
     printf("%.2lf\n", (avg / (line-1)));
 }
