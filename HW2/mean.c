@@ -28,7 +28,7 @@ void mean(FILE *f){
     int grade;
     int retval;
     double avg = 0;
-    int line = 1;
+    double line = 1;
     while(1){
         retval = fscanf(f, "%d", &grade);
         if(retval == EOF){
@@ -41,7 +41,7 @@ void mean(FILE *f){
         }
         //Check grade's validity
         if (grade > MAX_GRADE || grade < MIN_GRADE) {
-            fprintf(stderr, "Error in line %d: grade %d invalid\n", line, grade);
+            fprintf(stderr, "Error in line %.0f: grade %d invalid\n", line, grade);
             exit(1);
         }
         else {
@@ -49,5 +49,5 @@ void mean(FILE *f){
         line++;
         }
     }
-    printf("%.2lf\n", (avg / line));
+    printf("%.2lf\n", (avg / (line-1)));
 }
