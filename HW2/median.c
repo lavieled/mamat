@@ -42,12 +42,14 @@ int median(char *argv, int num_elements) {
             break; /* Finished */
         } else if (retval != 1) { /* Error */
             fprintf(stderr, "Error: not a number\n");
+            free(arr);
             exit(1);
         }
 
         /* Find bin */
         if (grade < MIN_GRADE || grade > MAX_GRADE) {
             fprintf(stderr, "Error at line %d: grade %d invalid\n", line, grade);
+            free(arr);
             exit(1);
         } else {
             arr[line++] = grade;
@@ -57,7 +59,9 @@ int median(char *argv, int num_elements) {
     int median;
     qsort(arr, line, sizeof(int), compare);
     median = arr[(line + 1) / 2];
+
     free(arr);
+    
     return median;
 }
 
