@@ -24,7 +24,8 @@ int main(int argc, char **argv) {
 void mean(FILE *f){
     int grade;
     int retval;
-    int max = -1;
+    double avg = 0;
+    int line_n = 0;
     while(1){
         retval = fscanf(f, "%d", &grade);
         if(retval == EOF){
@@ -35,10 +36,8 @@ void mean(FILE *f){
             fprintf(stderr, "Error: not a number\n");
             exit(1);
         }
-        if(grade > max){
-            max = grade;
-        }
-
+        avg += grade;
+        line_n++;
     }
-    printf("%.2lf\n", max);
+    printf("%.2lf\n", (avg / line_n));
 }
