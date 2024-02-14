@@ -2,7 +2,10 @@
 #include <stdlib.h>
 #include <string.h>
 
-void mean(FILE *f);
+#define MAX_GRADE 100
+#define MIN_GRADE 0
+
+void min(FILE *f);
 
 int main(int argc, char **argv) {
     FILE *f;
@@ -18,13 +21,14 @@ int main(int argc, char **argv) {
         fprintf(stderr, "File not found: \"%s\"\n", argv[1]);
         return 1;
     }
-    mean(f);
+    min(f);
     return 0;
 }
-void mean(FILE *f){
+void min(FILE *f){
     int grade;
     int retval;
     int min = 101;
+    int line = 1;
     while(1){
         retval = fscanf(f, "%d", &grade);
         if(retval == EOF){
@@ -35,10 +39,15 @@ void mean(FILE *f){
             fprintf(stderr, "Error: not a number\n");
             exit(1);
         }
-        if(grade < min){
+        else if (grade < MIN_GRADE || grade > MAX_GRADE) {
+            fprintf(stderr, "Error at line %d: grade %d invalid\n", line, grade);
+            exit(1);
+        }
+        else if(grade < min){
             min = grade;
         }
+        line++;
 
     }
-    printf("%.2lf\n", min);
+    printf("%d\n", min);
 }
