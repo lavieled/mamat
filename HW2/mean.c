@@ -2,6 +2,9 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define MAX_GRADE 100
+#define MIN_GRADE 0
+
 void mean(FILE *f);
 
 int main(int argc, char **argv) {
@@ -25,7 +28,7 @@ void mean(FILE *f){
     int grade;
     int retval;
     double avg = 0;
-    int line_n = 0;
+    int line = 1;
     while(1){
         retval = fscanf(f, "%d", &grade);
         if(retval == EOF){
@@ -36,8 +39,15 @@ void mean(FILE *f){
             fprintf(stderr, "Error: not a number\n");
             exit(1);
         }
+        //Check grade's validity
+        if (grade > MAX_GRADE || grade < MIN_GRADE) {
+            fprintf(stderr, "Error in line %d: grade %d invalid\n", line, grade);
+            exit(1);
+        }
+        else {
         avg += grade;
-        line_n++;
+        line++;
+        }
     }
-    printf("%.2lf\n", (avg / line_n));
+    printf("%.2lf\n", (avg / line));
 }
