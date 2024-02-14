@@ -2,8 +2,12 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define NBINS 10
+#define MAX_GRADE 100
+#define MIN_GRADE 0
+
 static FILE *f;
-static int nbins = 10;
+static int nbins = NBINS;
 
 void operate(int *bins);
 
@@ -14,7 +18,7 @@ void parse_arg(int argc, char **argv) {
         if (!strcmp(argv[i], "-")) {
             f = stdin;
         } else if (!strcmp(argv[i], "-n_bins")) {
-            nbins = i<argc-1 ? atoi(argv[i+1]): 10;
+            nbins = i<argc-1 ? atoi(argv[i+1]): NBINS;
             i++;
         } else {
             f = fopen(argv[i], "r");
@@ -38,23 +42,33 @@ int main(int argc, char **argv) {
 }
 
 void operate (int *bins) {
-    int grade; int retval; double pace;
+    int grade;
+    int retval;
+    int line = 1; 
+    double pace;
     while (1) {
         retval = fscanf(f, "%d", &grade);
         if (retval == EOF) {
             break; /* Finished */
-        } else if (retval != 1) { /* Error */
-        }
+        } 
+        else if (retval != 1) { /* Error */
         fprintf(stderr, "Error: not a number\n");
         exit(1);
     }
 /* Find bin */
-    int n = grade / (100 / nbins);
+    if(grade < MIN_GRADE || grade > MAX_GRADE){
+        fprintf(stderr, "Error at line %d: grade %d invalid\n", line, grade);
+        exit(1);
+    } else{
+        line++;
+    }
+    int n = grade / (MAX_GRADE / nbins);
     bins [n]++;
 /* Print bins */
-    pace = 100.0 /nbins;
+}
+    pace = MAX_GRADE /nbins;
     for (int i=0; i<nbins; ++i) {
-        printf("%.01f-%.0f\t%d\n", i * pace,
-            (i < nbins - 1)? ((i+1) * pace-1) : 100, bins[i]);
+        printf("%.0lf-%.0lf\t%d\n", i * pace,
+            (i < nbins - 1)? ((i+1) * pace-1) : MAX_GRADE, bins[i]);
     }
 }
