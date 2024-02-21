@@ -18,14 +18,14 @@ void operate(int *bins);
 void parse_arg(int argc, char **argv) {
     f = stdin;
     for (int i=1; i<argc; ++i) {
-        if (!strcmp(argv[i], "-")) {
+        if (!strcmp(argv[i], "-")) { //If the string is a "-"
             f = stdin;
         } //choose num of bins for hist
         else if (!strcmp(argv[i], "-n_bins")) {
             nbins = i<argc-1 ? atoi(argv[i+1]): NBINS;
             i++;
         }
-         else {//open file
+         else {//open file and read from it
             f = fopen(argv[i], "r");
         }
     }
@@ -48,7 +48,7 @@ int main(int argc, char **argv) {
 void operate (int *bins) {
     int grade;
     int retval;
-    int line = 1; 
+    int line = 1; //the first grade is at location 1 and not 0
     double pace;
     while (1) {
         retval = fscanf(f, "%d", &grade);
@@ -59,13 +59,16 @@ void operate (int *bins) {
         fprintf(stderr, "Error: not a number\n");
         exit(1);
     }
-//check if input in grade range
+//check if input is in the grades' range
     if(grade < MIN_GRADE || grade > MAX_GRADE){
         fprintf(stderr, "Error at line %d: grade %d invalid\n", line, grade);
         exit(1);
     } else{
         line++;
     }
+        //*******************
+        //Need to add a way to insert grades into the last bin. grade 100 doesnt appear in hist
+        //*******************
     int n = grade / (MAX_GRADE / nbins);//calc to what bin the grade belongs
     bins [n]++;
 
