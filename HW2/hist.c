@@ -30,6 +30,7 @@ void parse_arg(int argc, char **argv) {
         }
     }
 }
+
 int main(int argc, char **argv) {
     parse_arg(argc, argv);
     if (!f) {//check for error
@@ -60,7 +61,7 @@ void operate (int *bins) {
         exit(1);
     }
 //check if input is in the grades' range
-    if(grade < MIN_GRADE || grade > MAX_GRADE){
+    if(grade < MIN_GRADE || grade > MAX_GRADE){ //Not in range
         fprintf(stderr, "Error at line %d: grade %d invalid\n", line, grade);
         exit(1);
     } else{
