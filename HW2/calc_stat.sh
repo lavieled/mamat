@@ -6,7 +6,7 @@ if [[ ! "$1" =~ ^[0-9]$ || ! $# -eq 1 ]]; then
   error="Wrong number of arguments";
   error>$2;
   exit(1);
-# Second, we check if there is a valid file inside the repo
+# Second, we check if there is a valid grades text file inside the repo
 elif [[ ! -e "$1.txt" ]]; then
   #There is no such file
   error="Course not found";
