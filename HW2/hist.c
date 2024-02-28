@@ -70,8 +70,9 @@ void operate (int *bins) {
         //*******************
         //Need to add a way to insert grades into the last bin. grade 100 doesnt appear in hist
         //*******************
-    int n = grade / (MAX_GRADE / nbins);//calc to what bin the grade belongs
-    bins [n]++;
+    int col = grade / (MAX_GRADE / nbins);//calc to what collumn(bin) the grade belongs
+    int last_bin = (MAX_GRADE / nbins)*(nbins - 1);//find value of start of last bin
+    (grade > last_bin)? bins[nbins -1]++ : bins[col]++;//increase value at the calculated collumn
 
 }//print bins
     pace = MAX_GRADE /nbins;
