@@ -3,15 +3,15 @@
 # First we check the input's validity - that it is a course number with 6 digits
 if [[ ! "$1" =~ ^[0-9]$ || ! $# -eq 1 ]]; then
   #Invalid input
-  error="Wrong number of arguments";
-  error>$2;
-  exit(1);
+  error="Wrong number of arguments"
+  echo "$error" > "$2"
+  exit 1
 # Second, we check if there is a valid grades text file inside the repo
 elif [[ ! -e "$1.txt" ]]; then
   #There is no such file
-  error="Course not found";
-  error>$2;
-  exit(1);
+  error="Course not found"
+  echo "$error" > "$2"
+  exit 1
 else
 # We create a new file with the statistics
 # Then, read the data from the input/file 
