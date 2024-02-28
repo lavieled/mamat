@@ -17,13 +17,13 @@ else
 # Then, read the data from the input/file 
 # And produce a histogram into a file
   res_dir="$1_stat"
-  # We recreate the directory empty
+# We recreate the directory empty
   rm -rf "$res_dir"; mkdir "$res_dir"
 # Maybe not necessery grades_file="$1_stat/grades.txt"
   course_statistics="$1_stat/statistics.txt"
-  # Compiling the histogram code
+# Compiling the histogram code
   gcc -g -Wall -o "histogram.exe" "histogram.c"
-  
+  ./histogram.exe "histogram.txt" "$1_stat/grades.txt"
 # Creating a file that combines all the statistics:
 # Avg, Median, Min, max - devided by a tab
 fi
