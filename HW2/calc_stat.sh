@@ -20,7 +20,7 @@ else
 #********************************************** course_statistics="$1_stat/statistics.txt"
 # Compiling the histogram code
   gcc -g -Wall -o "histogram.exe" "hist.c"
-  ./histogram.exe < "$1.txt" > "histogram.txt"
+  ./histogram.exe < "$1.txt" > "$1_stat/histogram.txt"
 # Creating a file that combines all the statistics:
 # Avg, Median, Min, max - devided by a tab
 #calculate course statistics
@@ -29,11 +29,12 @@ else
   #loop to run and add the stats each program
   for file in "${source_files[@]}"; do
   #get function from array
-  func_name=$(basename "$file")
+  func_name=$(basename "$file" .c)
   #compile the current function
-  gcc -o "$func_name" "$file"
+  gcc -g -o "${func_name}" "$file"
   #run the func and direct output to statistics file
-  ./"$func_name" < "$1.txt" >> "statistics.txt"
-  #rm "$func_name"
+  ##################################################################eroor line 37
+  ./"${func_name}" < "$1.txt" >> "$1_stat/statistics.txt"
+  #rm "${func_name}"
   done
 fi
