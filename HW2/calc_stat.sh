@@ -14,8 +14,8 @@ elif [[ ! -e "$1.txt" ]]; then
   exit(1);
 else
 # We create a new file with the statistics
-# And read the data from the input/file 
-# and produce a histogram into a file
+# Then, read the data from the input/file 
+# And produce a histogram into a file
   res_dir="$1_stat"
   grades_file="$1_stat/grades.txt"
   course_statistics="$1_stat/statistics.txt"
