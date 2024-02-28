@@ -19,11 +19,26 @@ else
   res_dir="$1_stat"
 # We recreate the directory empty
   rm -rf "$res_dir"; mkdir "$res_dir"
-# Maybe not necessery grades_file="$1_stat/grades.txt"
-  course_statistics="$1_stat/statistics.txt"
+#************************************ Maybe not necessery grades_file="$1_stat/grades.txt"
+#********************************************** course_statistics="$1_stat/statistics.txt"
 # Compiling the histogram code
   gcc -g -Wall -o "histogram.exe" "histogram.c"
   ./histogram.exe "histogram.txt" "$1_stat/grades.txt"
 # Creating a file that combines all the statistics:
 # Avg, Median, Min, max - devided by a tab
+#calculate course statistics
+  #init statistics file
+  course_statistics="$1_stat/statistics.txt"
+  #create array of files to compile and run for the statistics
+  source_files=("mean.c" "median.c" "min.c" "max.c")
+  #loop to run and add the stats each program
+  for file in "${source_files[@]}"; do
+  #get function from array
+  func_name=$(basename "$file" .c)
+  #compile the current function
+  gcc -o "$func_name" "$file"
+  #run the func and direct output to statistics file
+  ./"$func_name" >> "$course_statistics"
+  rm "$func_name"
+  done
 fi
