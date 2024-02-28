@@ -1,6 +1,6 @@
 #!/bin/bash
 # First we check the input's validity - that it is a course number with 6 digits
-if [[ ! "$1" =~ ^[0-9]$ || ! $# -eq 1 ]]; then
+if [[ ! "$1" =~ ^[0-9]{6}$ || ! $# -eq 1 ]]; then
   #Invalid input
   error="Wrong number of arguments"
   echo "$error" > "$2"
