@@ -28,7 +28,7 @@ int main(int argc, char **argv) {
     }
 
     int result = median(argv[1], argc);
-    printf("Median: %d\n", result);//print median
+    printf("%d\n", result);//print median
 
     fclose(f);
     return 0;
@@ -40,39 +40,42 @@ int median(char *argv, int argc) {
     int retval;
     int line = 0;
 
-
-    for(int i=0;i<argc; ++i){
+   /* for(int i=0;i < argc; ++i){
         retval = fscanf(f, "%d", &grade);
-        if (retval == EOF) {
-
-            break; // Finished 
-        } else if (retval != 1) { // Error 
+        if (retval != 1) { // Error 
             fprintf(stderr, "Error: not a number\n");
             free(arr);
             exit(1);
         }
-    } 
-    while (1) {
-        retval = fscanf(f, "%d", &grade);
-        if (retval == EOF) {
-
-            break; /* Finished */
-        } else if (retval != 1) { /* Error */
-            fprintf(stderr, "Error: not a number\n");
-            //free(arr);
-            exit(1);
-        }
-
-    
         else if (grade < MIN_GRADE || grade > MAX_GRADE) {//check in range
             fprintf(stderr, "Error at line %d: grade %d invalid\n", (line + 1), grade);
-            //free(arr);
+            free(arr);
             exit(1);
-        } else {
+        }
+        else {
+            arr[line] = grade;//add grade to array
+            line++;
+            //printf("%d\n",grade);
+        }
+    } */
+    while (line <= argc) {
+        retval = fscanf(f, "%d", &grade);
+        if (retval != 1) { // Error 
+            fprintf(stderr, "Error: not a number\n");
+            free(arr);
+            exit(1);
+        }
+        else if (grade < MIN_GRADE || grade > MAX_GRADE) {//check in range
+            fprintf(stderr, "Error at line %d: grade %d invalid\n", (line + 1), grade);
+            free(arr);
+            exit(1);
+        }
+        else {
             arr[line] = grade;//add grade to array
             line++;
         }
-    }
+        
+    } 
 
     int median;
     qsort(arr, line, sizeof(int), compare);//sort array to easily find median
