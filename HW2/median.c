@@ -40,20 +40,33 @@ int median(char *argv, int argc) {
     int retval;
     int line = 0;
 
-    while (1) {
+
+    for(int i=0;i<argc; ++i){
         retval = fscanf(f, "%d", &grade);
         if (retval == EOF) {
-            break; /* Finished */
-        } else if (retval != 1) { /* Error */
+
+            break; // Finished 
+        } else if (retval != 1) { // Error 
             fprintf(stderr, "Error: not a number\n");
             free(arr);
             exit(1);
         }
+    } 
+    while (1) {
+        retval = fscanf(f, "%d", &grade);
+        if (retval == EOF) {
+
+            break; /* Finished */
+        } else if (retval != 1) { /* Error */
+            fprintf(stderr, "Error: not a number\n");
+            //free(arr);
+            exit(1);
+        }
 
     
-        if (grade < MIN_GRADE || grade > MAX_GRADE) {//check in range
+        else if (grade < MIN_GRADE || grade > MAX_GRADE) {//check in range
             fprintf(stderr, "Error at line %d: grade %d invalid\n", (line + 1), grade);
-            free(arr);
+            //free(arr);
             exit(1);
         } else {
             arr[line] = grade;//add grade to array
@@ -64,9 +77,7 @@ int median(char *argv, int argc) {
     int median;
     qsort(arr, line, sizeof(int), compare);//sort array to easily find median
     median = arr[(line) / 2];//choose median from sorted array
-
     free(arr);
-    
     return median;
 }
 
