@@ -34,7 +34,7 @@ else
   gcc -g -o "${func_name}" "$file"
   #run the func and direct output to statistics file
   ##################################################################eroor line 37
-  ./"${func_name}" < "$1.txt" >> "$1_stat/statistics.txt"
-  #rm "${func_name}"
+  ./"${func_name}" < "$1.txt" >> "$1_stat/statistics.txt" 2>&1
+  rm "${func_name}"
   done
 fi
