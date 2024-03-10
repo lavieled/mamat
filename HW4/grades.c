@@ -34,9 +34,12 @@ void student_destroy(void *element){
 
 }
 
+/*not sure if need
 int grades_clone((void *elemnt, void **output){
 
 }
+*/
+
 /**
  * @brief Destroys "grades", de-allocate all memory!
  */
@@ -57,7 +60,12 @@ void course_destroy(void *element){
  * @brief Initializes the "grades" data-structure.
  * @returns A pointer to the data-structure, of NULL in case of an error
  */
+//initialize grades struct
 void grades_init(){
+  
+}
+//free memory of grades struct
+void grades_destroy(struct grades *grades){
 
 }
 /**
