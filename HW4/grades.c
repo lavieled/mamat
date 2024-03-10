@@ -26,12 +26,40 @@ struct student{
 };
 
 //user functions for linked list adt
-int student_clone((void *element, void **output){
 
+void student_init(){
+  
+}
+
+int student_clone(void *element, void **output){
+  //first we check the validity of the object we want to clone
+  if (element == NULL){
+    return FAIL;
+  }
+  //if the object is valid we clone it, using casting
+  struct student* new_student;
+  new_student = (struct student*) element;
+  //set the new struct's fields - name and id
+  *output = student_init(new_student->student_name, new_student->id);
+  //we check that it was done successfully
+  if (*output==NULL){
+    return FAIL;
+  }
+  return SUCCESS;
 }
 
 void student_destroy(void *element){
-
+  //first we check the validity of the object we want to destroy
+  if (element == NULL){
+    return FAIL;
+  }
+  //if the object is valid we destroy it, using casting
+  struct student* new_student;
+  new_student = (struct student*) element;
+  //We free all the allocations that were done in the process
+  free(student->student_name);
+  list_destroy(student->course_list);
+  free(student);
 }
 
 /*not sure if need
@@ -48,9 +76,7 @@ int course_clone((void *elemnt, void **output){
 void course_destroy(void *element){
 
 }
-void student_init(){
 
-}
 void course_init(){
 
 }
