@@ -9,6 +9,8 @@
 #define FAIL -1
 #define TRUE 1
 #define FALSE 0
+#define MAX_GRADE 100
+#define MIN_GRADE 0
   
 struct grades{
   struct list *student_list;
@@ -76,9 +78,27 @@ int course_clone((void *elemnt, void **output){
 void course_destroy(void *element){
 
 }
+struct student* student_init(){
 
-void course_init(){
-
+}
+struct course* course_init(const char *course_name, int grade){
+if(course_name == NULL || grade < MIN_GRADE || grade > MAX_GRADE){
+  return NULL;
+  struct course *new_course;
+  new_course = (struct course*)malloc(sizeof(struct course));
+  if(new_course == NULL){
+    return NULL;
+  }
+  /*
+  check if the strcpy works, or if need an aux func for copying course name
+  */
+  char* new_course->course_name = (char*)malloc(strlen(course_name));
+  if(new_course->course_name == NULL){
+    return NULL;
+  }
+  strcpy(new_course->course_name, course_name);
+  new_course->grade = grade;
+  return new_course;
 }
 
 //grades functions for operating
@@ -89,14 +109,23 @@ void course_init(){
 /*
 *@brief initialize "grades" struct, allocate memory
 */
-void grades_init(){
-  
+struct grades* grades_init(){
+  struct grades *new_grades;
+  struct list *student_list ;
+  new_grades = (struct grades*)malloc(sizeof(struct grades));
+  if(new_grades == NULL) return NULL;
+  student_list = list_init(int student_clone, void student_destroy);
+  if(student_list == NULL) return NULL;
+  new_grades->student_list = student_list;
+  return new_grades;
 }
 /**
  * @brief Destroys "grades", de-allocate all memory!
  */
 void grades_destroy(struct grades *grades){
-
+  if(grades == NULL) return;
+  list_destroy(grades->student_list);
+  free(grades);
 }
 /**
  * @brief Adds a student with "name" and "id" to "grades"
