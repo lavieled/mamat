@@ -29,8 +29,41 @@ struct student{
 
 //user functions for linked list adt
 
-void student_init(){
-  
+struct student_init(const char* student_name, int id){
+  //first we check that the id and the name are valid
+  if (id < 0 || student_name == NULL){
+    //the parameters are invalid
+    return NULL;
+  }
+  //the parameters are valid, so we create the struct's parts
+  struct student* new_student = 
+                  (struct student*)malloc(sizeof(struct student));
+  //we check that the allocation succeeded
+  if (new_student == NULL){
+    //the allocation didn't succeed
+    return NULL;
+  }
+  struct list* course_list = list_init(course_clone, course_destroy);
+   //we check that the a list was created
+  if (course_list == NULL){
+    //there was a problem, so we free the allocated space
+    free(new_student)
+    return NULL;
+  }
+  new_student->student_name=clone_str(student_name);
+  //we check that it succeeded
+  if ( new_student->student_name == NULL){
+    //it failed, we want to free the allocated memory
+    free(new_student);
+    free(course_list);
+    return NULL;
+  }
+  //it succeeded
+  new_student->num_courses=0;
+  new_student->avg=0;
+  new_student->id=id;
+  new_student->course_list=course_list;
+return new_student;
 }
 
 int student_clone(void *element, void **output){
