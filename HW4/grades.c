@@ -26,7 +26,7 @@ struct student{
 };
 
 //user functions for linked list adt
-int student_clone((void *elemnt, void **output){
+int student_clone((void *element, void **output){
 
 }
 
@@ -40,12 +40,6 @@ int grades_clone((void *elemnt, void **output){
 }
 */
 
-/**
- * @brief Destroys "grades", de-allocate all memory!
- */
-void grades_destroy(void *element){
-
-}
 
 int course_clone((void *elemnt, void **output){
 
@@ -54,17 +48,27 @@ int course_clone((void *elemnt, void **output){
 void course_destroy(void *element){
 
 }
+void student_init(){
+
+}
+void course_init(){
+
+}
 
 //grades functions for operating
 /*
  * @brief Initializes the "grades" data-structure.
  * @returns A pointer to the data-structure, of NULL in case of an error
  */
-//initialize grades struct
+/*
+*@brief initialize "grades" struct, allocate memory
+*/
 void grades_init(){
   
 }
-//free memory of grades struct
+/**
+ * @brief Destroys "grades", de-allocate all memory!
+ */
 void grades_destroy(struct grades *grades){
 
 }
