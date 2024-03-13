@@ -147,12 +147,28 @@ void student_destroy(void *element){
     free(student);
   }
 
-/*not sure if need
-int grades_clone((void *elemnt, void **output){
-
+/**
+ * @brief Search if id already exists in students list
+ * @param student_list students list to search at
+ * @param id id to search for at the list
+ * @returns the student struct if found, NULL otherwise
+ */
+struct student *check_student(struct list *student_list, int id){
+  //check if list is empty or illeagal id
+  if(student_list == NULL || id < 0){
+    return NULL;
+  }
+  struct iterator *it;
+  it = list_begin(student_list);
+  //loop to look for the student in the list
+  while(it){
+    struct student *student = list_get(it);
+    if(student->id == id) return student;
+    it = list_next(it)
 }
-*/
-
+//student not in list
+return NULL;
+}
 //**********course struct**********//
 
 /*
