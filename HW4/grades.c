@@ -305,7 +305,37 @@ int grades_add_grade(struct grades *grades,
                      const char *name,
                      int id,
                      int grade){
-
+  //check if grades is empty or illegal id, empty name, illegal grade
+  if (grades == NULL || id < 0 || name == NULL || grade > MAX_GRADE || grade < MIN_GRADE ){
+		return FAIL;
+	}
+  struct student *student = check_student(grades->student_list, id);
+  //check if student exists
+  if(student == NULL){
+    return FAIL;
+  }
+    //check if course already exists
+  if(check_course(student->course_list, name)){
+     return FAIL;
+   }
+  struct course *new_course;
+  //check couse was created
+   if(new_course == NULL){
+    return FAIL;
+  }
+  //add new course to list, check if fails
+  new_course = course_init(name, grade);
+  int result = list_push_back(student->course_list, temp_course);
+  if(result !=SUCCESS){
+    return FAIL;
+  }
+  course_destroy(new_course);
+  //update new avg based on old avg, num of courses taken and new grade
+  float sum_tot = (((float)student->num_courses*student->avg) + (float)grade);
+  student->num_courses++;
+  student->avg = sum_tot/student->num_courses;
+  return SUCCESS;
+ }
 }
 
 /**
@@ -319,9 +349,14 @@ int grades_add_grade(struct grades *grades,
  * @note If the student has no courses, the average is 0.
  * @note On error, sets "out" to NULL.
  */
-
+//lavie need finish
 float grades_calc_avg(struct grades *grades, int id, char **out){
-
+  if(grades == NULL){
+    *out = NULL;
+    return FAIL;
+  }
+  struct student *student;
+  student = check_student
 }
 
 /**
