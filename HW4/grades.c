@@ -226,6 +226,34 @@ void course_destroy(void *element){
       free(student);
 }
 
+/*
+ * @brief checks if a course with the same name already exists.
+ * @param course_list pointer to a student's course list.
+ * @param course_name the name of the course we want to check.
+ * @returns a pointer to the course struct if it exists,
+ * or NULL in case there is no such course, or the name is invalid.
+ */
+
+struct course * check_course (struct list * course_list, char * course_name){
+  if ( course_list == NULL || course_name == NULL ){
+    //The list doesn't exist, or the name is invalid.
+    return NULL;
+  }
+  //The course and the list are valid - we want to search the list
+  //and see if it exists.
+  struct iterator * it;
+  it = list_begin(course_list);
+  while(it){
+    struct course * tmp_course = list_get(it);
+    if (tmp_course->course_name == course_name){
+      return tmp_course;
+    }
+  it=list_next(it);
+  }
+  //There is no such course in the list.
+  return NULL;
+}
+
 //grades functions for operating
 /*
  * @brief Initializes the "grades" data-structure.
