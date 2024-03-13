@@ -11,7 +11,7 @@
 #define FALSE 0
 #define MAX_GRADE 100
 #define MIN_GRADE 0
-  
+
 struct grades{
   struct list *student_list;
 };
@@ -169,9 +169,11 @@ if(course_name == NULL || grade < MIN_GRADE || grade > MAX_GRADE){
   if(new_course == NULL){
     return NULL;
   }
+  
   /*
   check if the strcpy works, or if need an aux func for copying course name
   */
+  
   char* new_course->course_name = (char*)malloc(strlen(course_name));
   if(new_course->course_name == NULL){
     return NULL;
@@ -205,20 +207,34 @@ int course_clone(void *element, void **output){
   return SUCCESS;
 }
 
+/*
+ * @brief removes the "course" data-structure.
+ * @param element a pointer to the course's name.
+ */
+
 void course_destroy(void *element){
-
+  //first we check the validity of the object we want to destroy
+      if (element == NULL){
+        return FAIL;
+      }
+      //if the object is valid we destroy it, using casting
+      struct course* new_course;
+      new_course = (struct course*) element;
+      //We free all the allocations that were done in the process
+      free(course->course_name);
+      free(student);
 }
-
-
 
 //grades functions for operating
 /*
  * @brief Initializes the "grades" data-structure.
  * @returns A pointer to the data-structure, of NULL in case of an error
  */
+
 /*
 *@brief initialize "grades" struct, allocate memory
 */
+
 struct grades* grades_init(){
   struct grades *new_grades;
   struct list *student_list ;
@@ -229,23 +245,28 @@ struct grades* grades_init(){
   new_grades->student_list = student_list;
   return new_grades;
 }
+
 /**
  * @brief Destroys "grades", de-allocate all memory!
  */
+
 void grades_destroy(struct grades *grades){
   if(grades == NULL) return;
   list_destroy(grades->student_list);
   free(grades);
 }
+
 /**
  * @brief Adds a student with "name" and "id" to "grades"
  * @returns 0 on success
  * @note Failes if "grades" is invalid, or a student with 
  * the same "id" already exists in "grades"
  */
+
 int grades_add_student(struct grades *grades, const char *name, int id){
 
 }
+
 /**
  * @brief Adds a course with "name" and "grade" to the student with "id"
  * @return 0 on success
@@ -253,6 +274,7 @@ int grades_add_student(struct grades *grades, const char *name, int id){
  * in "grades", if the student already has a course with "name", or if "grade"
  * is not between 0 to 100.
  */
+
 int grades_add_grade(struct grades *grades,
                      const char *name,
                      int id,
@@ -271,6 +293,7 @@ int grades_add_grade(struct grades *grades,
  * @note If the student has no courses, the average is 0.
  * @note On error, sets "out" to NULL.
  */
+
 float grades_calc_avg(struct grades *grades, int id, char **out){
 
 }
@@ -284,6 +307,7 @@ float grades_calc_avg(struct grades *grades, int id, char **out){
  * @note The courses should be printed according to the order 
  * in which they were inserted into "grades"
  */
+
 int grades_print_student(struct grades *grades, int id){
 
 }
@@ -299,6 +323,7 @@ int grades_print_student(struct grades *grades, int id){
  * @note The courses should be printed according to the order 
  * in which they were inserted into "grades"
  */
+
 int grades_print_all(struct grades *grades){
 
 }
