@@ -26,7 +26,7 @@ else
 
 # Compiling the histogram code
   #gcc -g -Wall "hist.c" -o "hist.exe" 
-  ./hist.exe -nbins 10 < "$1.txt" > "histogram.txt"
+  ./hist.exe -n_bins 10 < "$1.txt" > "histogram.txt"
   # rm "histogram.exe"
 # Creating a file that combines all the statistics:
 # Avg, Median, Min, max - devided by a tab
@@ -34,7 +34,7 @@ else
   #create array of files to compile and run for the statistics
   #source_files=("mean.exe" "median.exe" "min.exe" "max.exe")
   #loop to run and add the stats each program
-  for file in ("mean.exe" "median.exe" "min.exe" "max.exe"); do
+  for file in "mean.exe" "median.exe" "min.exe" "max.exe"; do
   #get function from array
   #func_name=$(basename "$file")
   #compile the current function
@@ -43,6 +43,6 @@ else
   ./"${file}" < "$1.txt" >> "statistics.txt" #2>&1
   #rm "${func_name}"
   done
-  #mv "statistics.txt" "${course_num}_stat"
-  #mv "histogram.txt" "${course_num}_stat"
+  mv "statistics.txt" "$1_stat"
+  mv "histogram.txt" "$1_stat"
 fi
