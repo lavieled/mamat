@@ -80,8 +80,9 @@ struct student *student_init(const char* student_name, int id){
       //the allocation didn't succeed
       return NULL;
     }
+  //We initialize the course list of the new student.
     struct list* course_list = list_init(course_clone, course_destroy);
-     //we check that the a list was created
+     //We check that the a list was created
     if (course_list == NULL){
       //there was a problem, so we free the allocated space
       free(new_student)
@@ -264,7 +265,16 @@ void grades_destroy(struct grades *grades){
  */
 
 int grades_add_student(struct grades *grades, const char *name, int id){
-
+   //First we check that the name and id are valid
+    if (name == NULL || id == NULL || id < 0){
+      //the name or id is invalid
+      return FAIL;
+    }
+    if (){
+      //The student already exists, so we can't add him.
+      return FAIL;
+    }
+  return SUCCESS;
 }
 
 /**
