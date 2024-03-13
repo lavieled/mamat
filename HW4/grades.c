@@ -309,15 +309,31 @@ void grades_destroy(struct grades *grades){
  */
 
 int grades_add_student(struct grades *grades, const char *name, int id){
-   //First we check that the name and id are valid
-    if (name == NULL || id == NULL || id < 0){
-      //the name or id is invalid
+   //First we check that the struct, the name and id are valid
+    if ( grades == NULL || name == NULL || id == NULL || id < 0){
+      //the struct, name or id is invalid
       return FAIL;
     }
-    if (){
-      //The student already exists, so we can't add him.
+    if (check_student(grades->student_list, id) != NULL){
+      //The student already exists, so we don't add him.
       return FAIL;
     }
+    else {
+    //The student doesn't exist, so we create a temporary struct
+    //and add him to the list under the name tmp_student,
+    //and check the validity of the push.
+    struct student * tmp_student = student_init(name, id);
+    if (tmp_student == NULL){
+      //The creation wasn't successful.
+      return FAIL;
+    int tmp = list_push_back(grades->student_list, name);
+    //Check that the student was added succesfully
+    if (tmp != SUCCESS){
+      //The push didn't succeed.
+      return FAIL;
+    }
+  }
+  student_destroy(tmp_student);
   return SUCCESS;
 }
 
