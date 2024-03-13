@@ -15,10 +15,12 @@
 struct grades{
   struct list *student_list;
 };
+
 struct course{
   char *course_name;
   int grade;
 };
+
 struct student{
   char *student_name;
   int student_id;
@@ -27,9 +29,44 @@ struct student{
   int num_courses;
 };
 
+/*
+ * @brief clones a string.
+ * @param str a pointer to the string we want to clone.
+ * @returns a pointer to the cloned string, or NULL in case of an error.
+ */
+
+char * clone_str(const char* str){
+    //first we check that the string we received is not empty
+    if (str == NULL){
+      return NULL;
+    }
+    //if it is not empty then we want to clone it
+    len=strlen(str)+1;
+    char * clone = (char*)malloc(len*sizeof(char));
+    //check that the allocation succeeded
+    if (clone == NULL){
+      //it failed
+      return NULL;
+    }
+  else{
+    //it succeded, we copy the string
+    strcpy(clone, str);
+  }
+  return clone;
+}
+
 //user functions for linked list adt
 
-struct student_init(const char* student_name, int id){
+//**********student struct**********//
+
+/*
+ * @brief Initializes the "student" data-structure.
+ * @param student_name pointer to the name.
+ * @param id id number of a student.
+ * @returns a pointer to the student struct, or NULL in case of an error.
+ */
+
+struct student *student_init(const char* student_name, int id){
     //first we check that the id and the name are valid
     if (id < 0 || student_name == NULL){
       //the parameters are invalid
@@ -66,6 +103,13 @@ struct student_init(const char* student_name, int id){
   return new_student;
   }
 
+/*
+ * @brief clones the "student" data-structure.
+ * @param element a pointer to the student's name.
+ * @param output a pointer to the struct's pointer.
+ * @returns SUCCESS if the cloning succeeded, or FAIL in case it didn't.
+ */
+
 int student_clone(void *element, void **output){
     //first we check the validity of the object we want to clone
     if (element == NULL){
@@ -83,6 +127,11 @@ int student_clone(void *element, void **output){
     return SUCCESS;
   }
 
+/*
+ * @brief removes the "student" data-structure.
+ * @param element a pointer to the student's name.
+ */
+
 void student_destroy(void *element){
     //first we check the validity of the object we want to destroy
     if (element == NULL){
@@ -97,43 +146,21 @@ void student_destroy(void *element){
     free(student);
   }
 
-char * clone_str(const char* str){
-    //first we check that the string we received is not empty
-    if (str == NULL){
-      return NULL;
-    }
-    //if it is not empty then we want to clone it
-    len=strlen(str)+1;
-    char * clone = (char*)malloc(len*sizeof(char));
-    //check that the allocation succeeded
-    if (clone == NULL){
-      //it failed
-      return NULL;
-    }
-  else{
-    //it succeded, we copy the string
-    strcpy(clone, str);
-  }
-  return clone;
-}
-
 /*not sure if need
 int grades_clone((void *elemnt, void **output){
 
 }
 */
 
+//**********course struct**********//
 
-int course_clone((void *elemnt, void **output){
+/*
+ * @brief Initializes the "course" data-structure.
+ * @param course_name pointer to the course's name.
+ * @param grade the grade that the student received in the course.
+ * @returns a pointer to the course struct, or NULL in case of an error.
+ */
 
-}
-
-void course_destroy(void *element){
-
-}
-struct student* student_init(){
-
-}
 struct course* course_init(const char *course_name, int grade){
 if(course_name == NULL || grade < MIN_GRADE || grade > MAX_GRADE){
   return NULL;
@@ -153,6 +180,36 @@ if(course_name == NULL || grade < MIN_GRADE || grade > MAX_GRADE){
   new_course->grade = grade;
   return new_course;
 }
+
+/*
+ * @brief clones the "course" data-structure.
+ * @param element a pointer to the course's name.
+ * @param output a pointer to the struct's pointer.
+ * @returns SUCCESS if the cloning succeeded, or FAIL in case it didn't.
+ */
+
+int course_clone(void *element, void **output){
+  //first we check the validity of the object we want to clone
+    if (element == NULL){
+      return FAIL;
+    }
+    //if the object is valid we clone it, using casting
+    struct course* new_course;
+    new_course = (struct course*) element;
+    //set the new struct's fields - name and id
+    *output = course_init(new_course->course_name, new_course->grade);
+    //we check that it was done successfully
+    if (*output==NULL){
+      return FAIL;
+    }
+  return SUCCESS;
+}
+
+void course_destroy(void *element){
+
+}
+
+
 
 //grades functions for operating
 /*
