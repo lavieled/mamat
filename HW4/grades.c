@@ -406,6 +406,13 @@ float grades_calc_avg(struct grades *grades, int id, char **out){
  	*out = NULL;
 	return FAIL;
   }
+  char *name = (char*)malloc(strlen(student->name)*sizeof(char));
+  if(name == NULL){
+	*out = NULL;
+	return FAIL;
+	}
+	*name = clone_str(student->name);
+	*out = name;
   return(student->avg);
 }
 
@@ -448,7 +455,17 @@ int grades_print_student(struct grades *grades, int id){
  */
 
 int grades_print_all(struct grades *grades){
-
+ if(grades == NULL){
+    return FAIL;
+  }
+  struct iterator * it;
+  it = list_begin(student_list);
+  while(it){
+    struct student * tmp_student = list_get(it);
+    grades_print_student(grades, tmp_student->student_id);
+    it=list_next(it);
+  }	
+student_destroy(tmp_student);
 }
 
 
