@@ -431,12 +431,27 @@ int grades_print_student(struct grades *grades, int id){
 	if ( grades == NULL || id == NULL || id < 0){
         //The struct or id is invalid
       	return FAIL;
+	}
 	//We make a temp student struct to work with
-	struct student *tmp_student = check_student(grades->student_list, id);
+	struct student *tmp_student;
+	tmp_student = check_student(grades->student_list, id);
   	//check if student exists
   	if(student == NULL){
    	return FAIL;
-
+	}
+	//We create an iterator that begins at the head of the list "runs"
+	//on the student's courses.
+	struct iterator * it;
+	it = list_begin(tmp_student->course_list);
+	//At the beggining we print the student's name and id.
+	printf("%s %d: ", tmp_student->student_name tmp_student->student_id);
+	//As long as we didn't get to the end of the list, we print the info.
+  	while(it){
+    		printf("%s %d: ", tmp_course->student_name tmp_course->student_id);
+    		if (tmp_course->course_name == course_name){
+    	}
+  	it=list_next(it);
+  	}
 	//We destroy the temp student
 	student_destroy(tmp_student);
 	return SUCCESS;
