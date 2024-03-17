@@ -98,10 +98,10 @@ struct student *student_init(const char* student_name, int id){
       return NULL;
     }
     //it succeeded
-    new_student->num_courses=0;
-    new_student->avg=0;
-    new_student->id=id;
-    new_student->course_list=course_list;
+    new_student->num_courses = 0;
+    new_student->avg = 0;
+    new_student->id = id;
+    new_student->course_list = course_list;
   return new_student;
   }
 
@@ -394,14 +394,19 @@ int grades_add_grade(struct grades *grades,
  * @note If the student has no courses, the average is 0.
  * @note On error, sets "out" to NULL.
  */
-//lavie need finish
 float grades_calc_avg(struct grades *grades, int id, char **out){
   if(grades == NULL){
     *out = NULL;
     return FAIL;
   }
   struct student *student;
-  student = check_student
+  student = check_student(grades->student_list, id);
+  //check if student exists
+  if(student == NULL){
+ 	*out = NULL;
+	return FAIL;
+  }
+  return(student->avg);
 }
 
 /**
