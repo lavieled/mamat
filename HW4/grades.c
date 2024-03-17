@@ -444,15 +444,17 @@ int grades_print_student(struct grades *grades, int id){
 	struct iterator * it;
 	it = list_begin(tmp_student->course_list);
 	//At the beggining we print the student's name and id.
-	printf("%s %d: ", tmp_student->student_name tmp_student->student_id);
+	printf("%s %d:", tmp_student->student_name tmp_student->student_id);
 	//As long as we didn't get to the end of the list, we print the info.
   	while(it){
-    		printf("%s %d: ", tmp_course->student_name tmp_course->student_id);
-    		if (tmp_course->course_name == course_name){
-    	}
-  	it=list_next(it);
+		struct course * tmp_course = list_get(it);
+    		printf(" %s %d", tmp_course->course_name tmp_course->course_grade);
+  		it=list_next(it);
   	}
-	//We destroy the temp student
+	//Print a new line
+	printf("\n");
+	//We destroy the temp student and course.
+	course_destroy(tmp_course);
 	student_destroy(tmp_student);
 	return SUCCESS;
 }
