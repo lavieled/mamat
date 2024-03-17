@@ -12,15 +12,16 @@
 #define MAX_GRADE 100
 #define MIN_GRADE 0
 
+//the overall grades struct the user will use in our adt
 struct grades{
   struct list *student_list;
 };
-
+//course sturct for course name and grades
 struct course{
   char *course_name;
   int grade;
 };
-
+//student struct to gold courses list, name, id, and average
 struct student{
   char *student_name;
   int student_id;
@@ -41,7 +42,7 @@ char * clone_str(const char* str){
       return NULL;
     }
     //if it is not empty then we want to clone it
-    len=strlen(str)+1;
+    len = strlen(str) + 1;
     char * clone = (char*)malloc(len*sizeof(char));
     //check that the allocation succeeded
     if (clone == NULL){
@@ -73,7 +74,7 @@ struct student *student_init(const char* student_name, int id){
       return NULL;
     }
     //the parameters are valid, so we create the struct's parts
-    struct student* new_student = 
+	struct student* new_student = 
                   (struct student*)malloc(sizeof(struct student));
     //we check that the allocation succeeded
     if (new_student == NULL){
