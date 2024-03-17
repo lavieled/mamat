@@ -415,7 +415,19 @@ float grades_calc_avg(struct grades *grades, int id, char **out){
  */
 
 int grades_print_student(struct grades *grades, int id){
+	//First we check that the struct and id are valid
+	if ( grades == NULL || id == NULL || id < 0){
+        //The struct or id is invalid
+      	return FAIL;
+	//We make a temp student struct to work with
+	struct student *tmp_student = check_student(grades->student_list, id);
+  	//check if student exists
+  	if(student == NULL){
+   	return FAIL;
 
+	//We destroy the temp student
+	student_destroy(tmp_student);
+	return SUCCESS;
 }
 
 /**
