@@ -341,7 +341,7 @@ struct course* course_init(const char *course_name, int grade) {
         //The creation wasn't successful.
         return FAIL;
     }
-    int tmp = list_push_back(grades->student_list, name);
+    int tmp = list_push_back(grades->student_list, tmp_student);
         //Check that the student was added succesfully
         if (tmp != SUCCESS) {
             //The push didn't succeed.
