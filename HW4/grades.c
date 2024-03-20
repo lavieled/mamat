@@ -14,20 +14,20 @@
 //functions declaration
 //the overall grades struct the user will use in our adt
 struct grades{
-  struct list *student_list;
+    struct list *student_list;
 };
 //course struct for course name and grades
 struct course{
-  char *course_name;
-  int grade;
+    char *course_name;
+    int grade;
 };
 //student struct to hold courses list, name, id, and average
 struct student{
-  char *student_name;
-  int student_id;
-  struct list *course_list;
-  float avg;
-  int num_courses;
+    char *student_name;
+    int student_id;
+    struct list *course_list;
+    float avg;
+    int num_courses;
 };
 
 //funcs
@@ -134,7 +134,7 @@ struct course* course_init(const char *course_name, int grade) {
     strcpy(new_course->course_name, course_name);
     new_course->grade = grade;
     return new_course;
-    }
+}
 
 
 //user functions for linked list adt
@@ -148,41 +148,41 @@ struct course* course_init(const char *course_name, int grade) {
  * @returns SUCCESS if the cloning succeeded, or FAILED in case it didn't.
  */
 
-    int student_clone(void *element, void **output) {
-        //first we check the validity of the object we want to clone
-        if (element == NULL) {
-            return FAILED;
-        }
-        //if the object is valid we clone it, using casting
-        struct student *new_student;
-        new_student = (struct student *) element;
-        //set the new struct's fields - name and id
-        *output = student_init(new_student->student_name, new_student->student_id);
-        //we check that it was done successfully
-        if (*output == NULL) {
-            return FAILED;
-        }
-        return SUCCESS;
+int student_clone(void *element, void **output) {
+    //first we check the validity of the object we want to clone
+    if (element == NULL) {
+        return FAILED;
     }
+    //if the object is valid we clone it, using casting
+    struct student *new_student;
+    new_student = (struct student *) element;
+    //set the new struct's fields - name and id
+    *output = student_init(new_student->student_name, new_student->student_id);
+    //we check that it was done successfully
+    if (*output == NULL) {
+        return FAILED;
+    }
+    return SUCCESS;
+}
 
 /*
  * @brief removes the "student" data-structure.
  * @param element a pointer to the student's name.
  */
 
-    void student_destroy(void *element) {
-        //first we check the validity of the object we want to destroy
-        if (element == NULL) {
-            return;
-        }
-        //if the object is valid we destroy it, using casting
-        struct student *new_student;
-        new_student = (struct student *) element;
-        //We free all the allocations that were done in the process
-        free(new_student->student_name);
-        list_destroy(new_student->course_list);
-        free(new_student);
+void student_destroy(void *element) {
+    //first we check the validity of the object we want to destroy
+    if (element == NULL) {
+        return;
     }
+    //if the object is valid we destroy it, using casting
+    struct student *new_student;
+    new_student = (struct student *) element;
+    //We free all the allocations that were done in the process
+    free(new_student->student_name);
+    list_destroy(new_student->course_list);
+    free(new_student);
+}
 
 /**
  * @brief Search if id already exists in students list
@@ -190,22 +190,22 @@ struct course* course_init(const char *course_name, int grade) {
  * @param id id to search for at the list
  * @returns the student struct if found, NULL otherwise
  */
-    struct student *check_student(struct list *student_list, int id) {
-        //check if list is empty or illeagal id
-        if (student_list == NULL || id < 0) {
-            return NULL;
-        }
-        struct iterator *it;
-        it = list_begin(student_list);
-        //loop to look for the student in the list
-        while (it) {
-            struct student *student = list_get(it);
-            if (student->student_id == id) return student;
-            it = list_next(it);
-        }
-//student not in list
+struct student *check_student(struct list *student_list, int id) {
+    //check if list is empty or illeagal id
+    if (student_list == NULL || id < 0) {
         return NULL;
     }
+    struct iterator *it;
+    it = list_begin(student_list);
+    //loop to look for the student in the list
+    while (it) {
+        struct student *student = list_get(it);
+        if (student->student_id == id) return student;
+        it = list_next(it);
+    }
+//student not in list
+    return NULL;
+}
 /*
  * @brief Initializes the "student" data-structure.
  * @param student_name pointer to the name.
@@ -213,44 +213,43 @@ struct course* course_init(const char *course_name, int grade) {
  * @returns a pointer to the student struct, or NULL in case of an error.
  */
 
-    struct student *student_init(const char *student_name, int id) {
-        //first we check that the id and the name are valid
-        if (id < 0 || student_name == NULL) {
-            //the parameters are invalid
-            return NULL;
-        }
-        //the parameters are valid, so we create the struct's parts
-        struct student *new_student =
-                (struct student *) malloc(sizeof(struct student));
-        //we check that the allocation succeeded
-        if (new_student == NULL) {
-            //the allocation didn't succeed
-            return NULL;
-        }
-        //We initialize the course list of the new student.
-        struct list *course_list;
-        course_list = list_init(course_clone, course_destroy);
-        //We check that the list was created
-        if (course_list == NULL) {
-            //there was a problem, so we free the allocated space
-            free(new_student);
-            return NULL;
-        }
-        new_student->student_name = clone_str(student_name);
-        //we check that it succeeded
-        if (new_student->student_name == NULL) {
-            //it failed, we want to free the allocated memory
-            free(new_student);
-            free(course_list);
-            return NULL;
-        }
-        //it succeeded
-        new_student->num_courses = 0;
-        new_student->avg = 0;
-        new_student->student_id = id;
-        new_student->course_list = course_list;
-        return new_student;
+struct student *student_init(const char *student_name, int id) {
+    //first we check that the id and the name are valid
+    if (id < 0 || student_name == NULL) {
+        //the parameters are invalid
+        return NULL;
     }
+    //the parameters are valid, so we create the struct's parts
+    struct student *new_student =
+            (struct student *) malloc(sizeof(struct student));
+    //we check that the allocation succeeded
+    if (new_student == NULL) {
+        //the allocation didn't succeed
+        return NULL;
+    }
+    //We initialize the course list of the new student.
+    new_student->course_list = list_init(course_clone, course_destroy);
+    //We check that the list was created
+    if (new_student->course_list == NULL) {
+        //there was a problem, so we free the allocated space
+        free(new_student);
+        return NULL;
+    }
+    new_student->student_name = clone_str(student_name);
+    //we check that it succeeded
+    if (new_student->student_name == NULL) {
+        //it failed, we want to free the allocated memory
+        list_destroy(new_student->course_list);
+        free(new_student);
+        
+        return NULL;
+    }
+    //it succeeded
+    new_student->num_courses = 0;
+    new_student->avg = 0;
+    new_student->student_id = id;
+    return new_student;
+}
 
 
 
@@ -263,25 +262,25 @@ struct course* course_init(const char *course_name, int grade) {
  * or NULL in case there is no such course, or the name is invalid.
  */
 
-    struct course *check_course(struct list *course_list,const char *course_name) {
-        if (course_list == NULL || course_name == NULL) {
-            //The list doesn't exist, or the name is invalid.
-            return NULL;
-        }
-        //The course and the list are valid - we want to search the list
-        //and see if it exists.
-        struct iterator *it;
-        it = list_begin(course_list);
-        while (it) {
-            struct course *tmp_course = list_get(it);
-            if (tmp_course->course_name == course_name) {
-                return tmp_course;
-            }
-            it = list_next(it);
-        }
-        //There is no such course in the list.
+struct course *check_course(struct list *course_list,const char *course_name) {
+    if (course_list == NULL || course_name == NULL) {
+        //The list doesn't exist, or the name is invalid.
         return NULL;
     }
+    //The course and the list are valid - we want to search the list
+    //and see if it exists.
+    struct iterator *it;
+    it = list_begin(course_list);
+    while (it) {
+        struct course *tmp_course = list_get(it);
+        if (tmp_course->course_name == course_name) {
+            return tmp_course;
+        }
+        it = list_next(it);
+    }
+    //There is no such course in the list.
+    return NULL;
+}
 
 //grades functions for operating
 /*
@@ -293,16 +292,16 @@ struct course* course_init(const char *course_name, int grade) {
 *@brief initialize "grades" struct, allocate memory
 */
 
-    struct grades *grades_init() {
-        struct grades *new_grades;
-        struct list *student_list;
-        new_grades = (struct grades *) malloc(sizeof(struct grades));
-        if (new_grades == NULL) return NULL;
-        student_list = list_init(student_clone, student_destroy);
-        if (student_list == NULL) return NULL;
-        new_grades->student_list = student_list;
-        return new_grades;
-    }
+struct grades *grades_init() {
+    struct grades *new_grades;
+    struct list *student_list;
+    new_grades = (struct grades *) malloc(sizeof(struct grades));
+    if (new_grades == NULL) return NULL;
+    student_list = list_init(student_clone, student_destroy);
+    if (student_list == NULL) return NULL;
+    new_grades->student_list = student_list;
+    return new_grades;
+}
 
 /**
  * @brief Destroys "grades", de-allocate all memory!
@@ -317,7 +316,7 @@ void grades_destroy(struct grades *grades) {
 /**
  * @brief Adds a student with "name" and "id" to "grades"
  * @returns 0 on success
- * @note Failes if "grades" is invalid, or a student with 
+ * @note Failes if "grades" is invalid, or a student with
  * the same "id" already exists in "grades"
  */
 
@@ -340,11 +339,11 @@ int grades_add_student(struct grades *grades, const char *name, int id) {
         return FAILED;
     }
     int tmp = list_push_back(grades->student_list, tmp_student);
-        //Check that the student was added succesfully
-        if (tmp != SUCCESS) {
-            //The push didn't succeed.
-            return FAILED;
-        }
+    //Check that the student was added succesfully
+    if (tmp != SUCCESS) {
+        //The push didn't succeed.
+        return FAILED;
+    }
     student_destroy(tmp_student);
     return SUCCESS;
 }
@@ -358,41 +357,41 @@ int grades_add_student(struct grades *grades, const char *name, int id) {
  */
 
 int grades_add_grade(struct grades *grades,
-                             const char *name,
-                             int id,
-                             int grade) {
-            //check if grades is empty or illegal id, empty name, illegal grade
-       if (grades == NULL || id < 0 || name == NULL
-            || grade > MAX_GRADE || grade < MIN_GRADE) {
-            return FAILED;
-       }
-       struct student *student = check_student(grades->student_list, id);
-       //check if student exists
-       if (student == NULL) {
-           return FAILED;
-       }
-       //check if course already exists
-       if (check_course(student->course_list, name)) {
-           return FAILED;
-       }
-       struct course *new_course;
-        new_course = course_init(name, grade);
-       //check course was created
-       if (new_course == NULL) {
-           return FAILED;
-       }
-       //add new course to list, check if fails
-       int result = list_push_back(student->course_list, new_course);
-       if (result != SUCCESS) {
-            return FAILED;
-       }
-       course_destroy(new_course);
-       //update new avg based on old avg, num of courses taken and new grade
-       float sum_tot = (((float) student->num_courses * student->avg) + (float) grade);
-       student->num_courses++;
-       student->avg = sum_tot / student->num_courses;
-       return SUCCESS;
+                     const char *name,
+                     int id,
+                     int grade) {
+    //check if grades is empty or illegal id, empty name, illegal grade
+    if (grades == NULL || id < 0 || name == NULL
+        || grade > MAX_GRADE || grade < MIN_GRADE) {
+        return FAILED;
     }
+    struct student *student = check_student(grades->student_list, id);
+    //check if student exists
+    if (student == NULL) {
+        return FAILED;
+    }
+    //check if course already exists
+    if (check_course(student->course_list, name)) {
+        return FAILED;
+    }
+    struct course *new_course;
+    new_course = course_init(name, grade);
+    //check course was created
+    if (new_course == NULL) {
+        return FAILED;
+    }
+    //add new course to list, check if fails
+    int result = list_push_back(student->course_list, new_course);
+    if (result != SUCCESS) {
+        return FAILED;
+    }
+    course_destroy(new_course);
+    //update new avg based on old avg, num of courses taken and new grade
+    float sum_tot = (((float) student->num_courses * student->avg) + (float) grade);
+    student->num_courses++;
+    student->avg = sum_tot / student->num_courses;
+    return SUCCESS;
+}
 
 /**
  * @brief Calcs the average of the student with "id" in "grades".
@@ -405,27 +404,27 @@ int grades_add_grade(struct grades *grades,
  * @note If the student has no courses, the average is 0.
  * @note On error, sets "out" to NULL.
  */
-    float grades_calc_avg(struct grades *grades, int id, char **out) {
-        if (grades == NULL) {
-            *out = NULL;
-            return FAILED;
-        }
-        struct student *student;
-        student = check_student(grades->student_list, id);
-        //check if student exists
-        if (student == NULL) {
-            *out = NULL;
-            return FAILED;
-        }
-        char *name = (char *) malloc(strlen(student->student_name) * sizeof(char));
-        if (name == NULL) {
-            *out = NULL;
-            return FAILED;
-        }
-        name = clone_str(student->student_name);
-        *out = name;
-        return (student->avg);
+float grades_calc_avg(struct grades *grades, int id, char **out) {
+    if (grades == NULL) {
+        *out = NULL;
+        return FAILED;
     }
+    struct student *student;
+    student = check_student(grades->student_list, id);
+    //check if student exists
+    if (student == NULL) {
+        *out = NULL;
+        return FAILED;
+    }
+    char *name = (char *) malloc(strlen(student->student_name) * sizeof(char));
+    if (name == NULL) {
+        *out = NULL;
+        return FAILED;
+    }
+    name = clone_str(student->student_name);
+    *out = name;
+    return (student->avg);
+}
 
 /**
  * @brief Prints the courses of the student with "id" in the following format:
@@ -433,49 +432,49 @@ int grades_add_grade(struct grades *grades,
  * @returns 0 on success
  * @note Fails if "grades" is invalid, or if a student with "id" does not exist
  * in "grades".
- * @note The courses should be printed according to the order 
+ * @note The courses should be printed according to the order
  * in which they were inserted into "grades"
  */
 
-    int grades_print_student(struct grades *grades, int id) {
-        //First we check that the struct and id are valid
-        if (grades == NULL || id < 0) {
-            //The struct or id is invalid
-            return FAILED;
-        }
-        //We make a temp student struct to work with
-        struct student *tmp_student;
-        tmp_student = check_student(grades->student_list, id);
-        //check if student exists
-        if (tmp_student == NULL) {
-            return FAILED;
-        }
-        printf("%s %d:", tmp_student->student_name,
-        tmp_student->student_id);
-        //We create an iterator that begins at the head of the list "runs"
-        //on the student's courses.
-        struct iterator *it;
-        it = list_begin(tmp_student->course_list);
-        //At the beginning we print the student's name and id.
-        if (it == NULL && tmp_student->num_courses !=0) {
-            return FAILED;
-        }
-        //As long as we didn't get to the end of the list, we print the info.
-        //init a temp course
-    struct course *tmp_course;
-        while (it) {
-            tmp_course = list_get(it);
-            printf(" %s %d,", tmp_course->course_name,
-                tmp_course->grade);
-            it = list_next(it);
-        }
-        //Print a new line
-        printf("\b\n");
-        //We destroy the temp student and course.
-        //course_destroy(tmp_course);
-        //student_destroy(tmp_student);
-        return SUCCESS;
+int grades_print_student(struct grades *grades, int id) {
+    //First we check that the struct and id are valid
+    if (grades == NULL || id < 0) {
+        //The struct or id is invalid
+        return FAILED;
     }
+    //We make a temp student struct to work with
+    struct student *tmp_student;
+    tmp_student = check_student(grades->student_list, id);
+    //check if student exists
+    if (tmp_student == NULL) {
+        return FAILED;
+    }
+    printf("%s %d:", tmp_student->student_name,
+           tmp_student->student_id);
+    //We create an iterator that begins at the head of the list "runs"
+    //on the student's courses.
+    struct iterator *it;
+    it = list_begin(tmp_student->course_list);
+    //At the beginning we print the student's name and id.
+    if (it == NULL && tmp_student->num_courses !=0) {
+        return FAILED;
+    }
+    //As long as we didn't get to the end of the list, we print the info.
+    //init a temp course
+    struct course *tmp_course;
+    while (it) {
+        tmp_course = list_get(it);
+        printf(" %s %d,", tmp_course->course_name,
+               tmp_course->grade);
+        it = list_next(it);
+    }
+    //Print a new line
+    printf("\b\n");
+    //We destroy the temp student and course.
+    //course_destroy(tmp_course);
+    //student_destroy(tmp_student);
+    return SUCCESS;
+}
 
 /**
  * @brief Prints all students in "grade", in the following format:
@@ -483,27 +482,24 @@ int grades_add_grade(struct grades *grades,
  * STUDENT-2-NAME STUDENT-2-ID: COURSE-1-NAME COURSE-1-GRADE, [...]
  * @returns 0 on success
  * @note Fails if "grades" is invalid
- * @note The students should be printed according to the order 
+ * @note The students should be printed according to the order
  * in which they were inserted into "grades"
- * @note The courses should be printed according to the order 
+ * @note The courses should be printed according to the order
  * in which they were inserted into "grades"
  */
 
-    int grades_print_all(struct grades *grades) {
-        if (grades == NULL) {
-            return FAILED;
-        }
-        struct iterator *it;
-        it = list_begin(grades->student_list);
-        while (it) {
-            struct student *tmp_student = list_get(it);
-            grades_print_student(grades, tmp_student->student_id);
-            it = list_next(it);
-        }
+int grades_print_all(struct grades *grades) {
+    if (grades == NULL) {
+        return FAILED;
+    }
+    struct iterator *it;
+    it = list_begin(grades->student_list);
+    while (it) {
+        struct student *tmp_student = list_get(it);
+        grades_print_student(grades, tmp_student->student_id);
+        it = list_next(it);
+    }
 
     //student_destroy(tmp_student);
     return SUCCESS;
-    }
-
-
-
+}
