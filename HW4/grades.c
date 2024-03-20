@@ -450,30 +450,30 @@ int grades_add_grade(struct grades *grades,
         if (tmp_student == NULL) {
             return FAILED;
         }
+        printf("%s %d:", tmp_student->student_name,
+        tmp_student->student_id);
         //We create an iterator that begins at the head of the list "runs"
         //on the student's courses.
         struct iterator *it;
         it = list_begin(tmp_student->course_list);
         //At the beginning we print the student's name and id.
-        if (it == NULL) {
+        if (it == NULL && tmp_student->num_courses !=0) {
             return FAILED;
-          }
-        printf("%s %d:", tmp_student->student_name,
-        tmp_student->student_id);
+        }
         //As long as we didn't get to the end of the list, we print the info.
         //init a temp course
     struct course *tmp_course;
         while (it) {
             tmp_course = list_get(it);
             printf(" %s %d", tmp_course->course_name,
-            tmp_course->grade);
+                tmp_course->grade);
             it = list_next(it);
         }
         //Print a new line
         printf("\n");
         //We destroy the temp student and course.
-        course_destroy(tmp_course);
-        student_destroy(tmp_student);
+        //course_destroy(tmp_course);
+        //student_destroy(tmp_student);
         return SUCCESS;
     }
 
@@ -495,14 +495,13 @@ int grades_add_grade(struct grades *grades,
         }
         struct iterator *it;
         it = list_begin(grades->student_list);
-        struct student *tmp_student;
         while (it) {
-            tmp_student = list_get(it);
+            struct student *tmp_student = list_get(it);
             grades_print_student(grades, tmp_student->student_id);
             it = list_next(it);
         }
 
-    student_destroy(tmp_student);
+    //student_destroy(tmp_student);
     return SUCCESS;
     }
 
