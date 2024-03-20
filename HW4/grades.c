@@ -27,7 +27,7 @@ struct student{
     int student_id;
     struct list *course_list;
     float avg;
-    int num_courses;
+    float num_courses;
 };
 
 //funcs
@@ -449,20 +449,35 @@ int grades_print_student(struct grades *grades, int id) {
     if (tmp_student == NULL) {
         return FAILED;
     }
+     //At the beginning we print the student's name and id
     printf("%s %d:", tmp_student->student_name,
            tmp_student->student_id);
+    //incase of no courses, down line and countinue
+    if(tmp_student->num_courses == 0){
+      printf("\n");
+      return SUCCESS;
+    }
     //We create an iterator that begins at the head of the list "runs"
     //on the student's courses.
     struct iterator *it;
     it = list_begin(tmp_student->course_list);
-    //At the beginning we print the student's name and id.
-    if (it == NULL && tmp_student->num_courses !=0) {
+    //check if iterator is on list
+    if (it == NULL /*&& tmp_student->num_courses != 0*/) {
         return FAILED;
     }
     //As long as we didn't get to the end of the list, we print the info.
     //init a temp course
     struct course *tmp_course;
-    while (it) {
+    tmp_course = list_get(it);
+    for(float i = 1; i < tmp_student->num_courses; i++){
+        printf(" %s %d,", tmp_course->course_name,
+               tmp_course->grade);
+        it = list_next(it);
+        tmp_course = list_get(it);
+    }
+    printf(" %s %d\n", tmp_course->course_name,
+               tmp_course->grade);
+    /*while (it) {
         tmp_course = list_get(it);
         printf(" %s %d,", tmp_course->course_name,
                tmp_course->grade);
@@ -470,6 +485,7 @@ int grades_print_student(struct grades *grades, int id) {
     }
     //Print a new line
     printf("\b\n");
+    */
     //We destroy the temp student and course.
     //course_destroy(tmp_course);
     //student_destroy(tmp_student);
