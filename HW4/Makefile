@@ -9,4 +9,4 @@ grades.o: grades.c grades.h linked-list.h
 	$(CC) $(CFLAGS) -c -fpic grades.c
 
 clean:
-    rm -rf *.o
+	rm -rf *.o
