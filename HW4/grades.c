@@ -50,8 +50,7 @@ char * clone_str(const char* str){
         return NULL;
     }
     //if it is not empty then we want to clone it
-    int len = strlen(str) + 1;
-    char * clone = (char*)malloc(len*sizeof(char));
+    char * clone = (char*)malloc(sizeof(char)*(strlen(str) + 1));
     //check that the allocation succeeded
     if (clone == NULL){
         //it failed
