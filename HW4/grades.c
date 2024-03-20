@@ -26,7 +26,7 @@ struct student{
   char *student_name;
   int student_id;
   struct list *course_list;
-  int avg;
+  float avg;
   int num_courses;
 };
 
