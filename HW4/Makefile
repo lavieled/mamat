@@ -1,6 +1,6 @@
-CC=gcc
-CLINK=$(CC)
-CFLAGS=-g -Wall -std=c99
+CC	= gcc
+CLINK	= $(CC)
+CFLAGS	= -g -Wall -std=c99
 
 libgrades.so: grades.o
 	$(CLINK) -shared grades.o -o libgrades.so -llinked-list -L.
