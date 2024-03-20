@@ -241,7 +241,7 @@ struct student *student_init(const char *student_name, int id) {
         //it failed, we want to free the allocated memory
         list_destroy(new_student->course_list);
         free(new_student);
-        
+
         return NULL;
     }
     //it succeeded
