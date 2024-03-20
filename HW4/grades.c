@@ -465,12 +465,12 @@ int grades_add_grade(struct grades *grades,
     struct course *tmp_course;
         while (it) {
             tmp_course = list_get(it);
-            printf(" %s %d", tmp_course->course_name,
+            printf(" %s %d,", tmp_course->course_name,
                 tmp_course->grade);
             it = list_next(it);
         }
         //Print a new line
-        printf("\n");
+        printf("\b\n");
         //We destroy the temp student and course.
         //course_destroy(tmp_course);
         //student_destroy(tmp_student);
