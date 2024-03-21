@@ -31,6 +31,7 @@ struct student{
 };
 
 //functions declaration
+void print_student_aux(struct student *tmp_student);
 int student_clone(void *element, void **output);
 int course_clone(void *element, void **output);
 void student_destroy(void *element);
@@ -190,7 +191,7 @@ void student_destroy(void *element) {
  * @returns the student struct if found, NULL otherwise
  */
 struct student *check_student(struct list *student_list, int id) {
-    //check if list is empty or illeagal id
+    //check if list is empty or illegal id
     if (student_list == NULL || id < 0) {
         return NULL;
     }
@@ -249,9 +250,6 @@ struct student *student_init(const char *student_name, int id) {
     new_student->student_id = id;
     return new_student;
 }
-
-
-
 
 /*
  * @brief checks if a course with the same name already exists.
@@ -427,7 +425,37 @@ float grades_calc_avg(struct grades *grades, int id, char **out) {
     *out = name;
     return (student->avg);
 }
-
+//prints the student
+void print_student_aux(struct student *tmp_student){
+    //At the beginning we print the student's name and id
+    printf("%s %d:", tmp_student->student_name,
+           tmp_student->student_id);
+    //incase of no courses, down line and countinue
+    if(tmp_student->num_courses == 0){
+        printf("\n");
+        return;
+    }
+    //We create an iterator that begins at the head of the list "runs"
+    //on the student's courses.
+    struct iterator *it;
+    it = list_begin(tmp_student->course_list);
+    //check if iterator is on list
+    if (it == NULL) {
+        return;
+    }
+    //As long as we didn't get to the end of the list, we print the info.
+    //create a pointer to print courses
+    struct course *tmp_course;
+    tmp_course = list_get(it);
+    for(float i = 1; i < tmp_student->num_courses; i++){
+        printf(" %s %d,", tmp_course->course_name,
+               tmp_course->grade);
+        it = list_next(it);
+        tmp_course = list_get(it);
+    }
+    printf(" %s %d\n", tmp_course->course_name,
+           tmp_course->grade);
+}
 /**
  * @brief Prints the courses of the student with "id" in the following format:
  * STUDENT-NAME STUDENT-ID: COURSE-1-NAME COURSE-1-GRADE, [...]
@@ -451,46 +479,7 @@ int grades_print_student(struct grades *grades, int id) {
     if (tmp_student == NULL) {
         return FAILED;
     }
-    //At the beginning we print the student's name and id
-    printf("%s %d:", tmp_student->student_name,
-           tmp_student->student_id);
-    //incase of no courses, down line and countinue
-    if(tmp_student->num_courses == 0){
-        printf("\n");
-        return SUCCESS;
-    }
-    //We create an iterator that begins at the head of the list "runs"
-    //on the student's courses.
-    struct iterator *it;
-    it = list_begin(tmp_student->course_list);
-    //check if iterator is on list
-    if (it == NULL /*&& tmp_student->num_courses != 0*/) {
-        return FAILED;
-    }
-    //As long as we didn't get to the end of the list, we print the info.
-    //init a temp course
-    struct course *tmp_course;
-    tmp_course = list_get(it);
-    for(float i = 1; i < tmp_student->num_courses; i++){
-        printf(" %s %d,", tmp_course->course_name,
-               tmp_course->grade);
-        it = list_next(it);
-        tmp_course = list_get(it);
-    }
-    printf(" %s %d\n", tmp_course->course_name,
-           tmp_course->grade);
-    /*while (it) {
-        tmp_course = list_get(it);
-        printf(" %s %d,", tmp_course->course_name,
-               tmp_course->grade);
-        it = list_next(it);
-    }
-    //Print a new line
-    printf("\b\n");
-    */
-    //We destroy the temp student and course.
-    //course_destroy(tmp_course);
-    //student_destroy(tmp_student);
+    print_student_aux(tmp_student);
     return SUCCESS;
 }
 
@@ -511,13 +500,12 @@ int grades_print_all(struct grades *grades) {
         return FAILED;
     }
     struct iterator *it;
+    struct student *tmp_student;
     it = list_begin(grades->student_list);
     while (it) {
-        struct student *tmp_student = list_get(it);
-        grades_print_student(grades, tmp_student->student_id);
+        tmp_student = list_get(it);
+        print_student_aux(tmp_student);
         it = list_next(it);
     }
-
-    //student_destroy(tmp_student);
     return SUCCESS;
 }
