@@ -11,7 +11,7 @@
 #define MAX_GRADE 100
 #define MIN_GRADE 0
 
-//functions declaration
+
 //the overall grades struct the user will use in our adt
 struct grades{
     struct list *student_list;
@@ -30,7 +30,7 @@ struct student{
     float num_courses;
 };
 
-//funcs
+//functions declaration
 int student_clone(void *element, void **output);
 int course_clone(void *element, void **output);
 void student_destroy(void *element);
@@ -122,19 +122,18 @@ struct course* course_init(const char *course_name, int grade) {
     if (new_course == NULL) {
         return NULL;
     }
-
-    /*
-    check if the strcpy works, or if need an aux func for copying course name
-    */
-    new_course->course_name = (char *) malloc(sizeof(char)*strlen(course_name)+1);
+    /*check
+    new_course->course_name =
+     (char *) malloc(sizeof(char)*strlen(course_name)+1);
     if (new_course->course_name == NULL) {
         return NULL;
     }
     strcpy(new_course->course_name, course_name);
+     */
+    new_course->course_name = clone_str(course_name);
     new_course->grade = grade;
     return new_course;
 }
-
 
 //user functions for linked list adt
 
@@ -156,7 +155,8 @@ int student_clone(void *element, void **output) {
     struct student *new_student;
     new_student = (struct student *) element;
     //set the new struct's fields - name and id
-    *output = student_init(new_student->student_name, new_student->student_id);
+    *output = student_init(new_student->student_name,
+                           new_student->student_id);
     //we check that it was done successfully
     if (*output == NULL) {
         return FAILED;
@@ -340,6 +340,7 @@ int grades_add_student(struct grades *grades, const char *name, int id) {
     int tmp = list_push_back(grades->student_list, tmp_student);
     //Check that the student was added succesfully
     if (tmp != SUCCESS) {
+        student_destroy(tmp_student);
         //The push didn't succeed.
         return FAILED;
     }
@@ -382,6 +383,7 @@ int grades_add_grade(struct grades *grades,
     //add new course to list, check if fails
     int result = list_push_back(student->course_list, new_course);
     if (result != SUCCESS) {
+        course_destroy(new_course);
         return FAILED;
     }
     course_destroy(new_course);
@@ -415,7 +417,8 @@ float grades_calc_avg(struct grades *grades, int id, char **out) {
         *out = NULL;
         return FAILED;
     }
-    char *name = (char *) malloc(strlen(student->student_name) * sizeof(char));
+    char *name = (char *) malloc(strlen
+            (student->student_name)* sizeof(char));
     if (name == NULL) {
         *out = NULL;
         return FAILED;
