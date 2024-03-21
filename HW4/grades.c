@@ -126,7 +126,7 @@ struct course* course_init(const char *course_name, int grade) {
     /*
     check if the strcpy works, or if need an aux func for copying course name
     */
-    new_course->course_name = (char *) malloc(strlen(course_name));
+    new_course->course_name = (char *) malloc(sizeof(char)*strlen(course_name)+1);
     if (new_course->course_name == NULL) {
         return NULL;
     }
@@ -448,13 +448,13 @@ int grades_print_student(struct grades *grades, int id) {
     if (tmp_student == NULL) {
         return FAILED;
     }
-     //At the beginning we print the student's name and id
+    //At the beginning we print the student's name and id
     printf("%s %d:", tmp_student->student_name,
            tmp_student->student_id);
     //incase of no courses, down line and countinue
     if(tmp_student->num_courses == 0){
-      printf("\n");
-      return SUCCESS;
+        printf("\n");
+        return SUCCESS;
     }
     //We create an iterator that begins at the head of the list "runs"
     //on the student's courses.
@@ -475,7 +475,7 @@ int grades_print_student(struct grades *grades, int id) {
         tmp_course = list_get(it);
     }
     printf(" %s %d\n", tmp_course->course_name,
-               tmp_course->grade);
+           tmp_course->grade);
     /*while (it) {
         tmp_course = list_get(it);
         printf(" %s %d,", tmp_course->course_name,
