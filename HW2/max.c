@@ -17,7 +17,7 @@ int main(int argc, char **argv) {
         f = stdin;
     }
     else{
-        fopen(argv[1], "r");
+        f = fopen(argv[1], "r");
     }
     //check for errors
     if(!f){
@@ -33,7 +33,7 @@ void max(FILE *f){
     int max = -1;
     int line = 1;
     while(1){
-        retval = fscanf(f, "%d", &grade);
+        retval = fscanf(f, "%d", &grade);//read grades from file
         if(retval == EOF){
             break;//finished
         }
@@ -51,6 +51,6 @@ void max(FILE *f){
         }
         line++;
 
-    }
-    printf("%.d\n", max);
+    }//output max
+    printf("%.d", max);
 }
