@@ -17,7 +17,7 @@ int main(int argc, char **argv) {
         f = stdin;
     }
     else{
-        fopen(argv[1], "r");
+        f = fopen(argv[1], "r");
     }
     //check for errors
     if(!f){
@@ -47,11 +47,12 @@ void mean(FILE *f){
             fprintf(stderr, "Error in line %.0f: grade %d invalid\n", line, grade);
             exit(1);
         }
+        //add grade to sum and add to line counter to track place
         else {
         avg += grade;
         line++;
         }
     }
     //print the average
-    printf("%.2lf\n", (avg / (line-1)));
+    printf("%.2lf\t", (avg / (line-1)));
 }
