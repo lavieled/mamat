@@ -44,6 +44,7 @@ int main(int argc, char **argv) {
     }
     operate (bins);
     free (bins);
+    fclose(f);
 }
 
 void operate (int *bins) {
@@ -56,25 +57,22 @@ void operate (int *bins) {
         if (retval == EOF) {
             break; /* Finished */
         } 
-        else if (retval != 1) { /* Error */
+        else if (retval != 1){ /* Error */
         fprintf(stderr, "Error: not a number\n");
         exit(1);
     }
-//check if input is in the grades' range
+    //check if input is in the grades' range
     if(grade < MIN_GRADE || grade > MAX_GRADE){ //Not in range
         fprintf(stderr, "Error at line %d: grade %d invalid\n", line, grade);
         exit(1);
     } else{
         line++;
     }
-        //*******************
-        //Need to add a way to insert grades into the last bin. grade 100 doesnt appear in hist
-        //*******************
     int col = grade / (MAX_GRADE / nbins);//calc to what collumn(bin) the grade belongs
     int last_bin = (MAX_GRADE / nbins)*(nbins - 1);//find value of start of last bin
     (grade > last_bin)? bins[nbins -1]++ : bins[col]++;//increase value at the calculated collumn
 
-}//print bins
+    }//print bins
     pace = MAX_GRADE /nbins;
     for (int i=0; i<nbins; ++i) {
         printf("%.0lf-%.0lf\t%d\n", i * pace,
