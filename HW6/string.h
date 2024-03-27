@@ -5,10 +5,13 @@
 #ifndef STRING_H
 #define STRING_H
 
+#include "generic-string.h"
+#include <cstring>
 
-#include <cstring> // Include necessary header files
 
-class String {
+
+
+class String : public GenericString{
 private:
     char *data; // Pointer to character array holding the string data
     size_t length; // Length of the string
@@ -22,16 +25,20 @@ public:
 
     // Overloaded assignment operators
     String& operator=(const String &rhs);
-    String& operator=(const char *str);
+    String& operator=(const char *str) override;
 
-    // Comparison functions
-    bool equals(const String &rhs) const;
-    bool equals(const char *rhs) const;
+    // Comparison operators
+    bool operator==(const GenericString &rhs) const;
+    bool operator==(const char *rhs) const override;
 
     // Utility functions
-    void split(const char *delimiters, String **output, size_t *size) const;
+    StringArray split(const char *delimiters, String **output, size_t *size) const;
     int to_integer() const;
-    String trim() const;
+    String& trim();
+
+    // casting functions
+    String& as_string();
+    String& as_string() const;
 };
 
 #endif // STRING_H
