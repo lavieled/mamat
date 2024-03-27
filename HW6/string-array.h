@@ -1,6 +1,6 @@
 
-#ifndef STRINGARRAY_H
-#define STRINGARRAY_H
+#ifndef STRING_ARRAY_H
+#define STRING_ARRAY_H
 
 #include "string.h"
 #include "generic-string.h"
