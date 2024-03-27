@@ -6,9 +6,7 @@
 #define STRING_H
 
 #include "generic-string.h"
-#include <cstring>
-
-
+#include <cstring> // Include necessary header files
 
 
 class String : public GenericString{
@@ -32,7 +30,7 @@ public:
     bool operator==(const char *rhs) const override;
 
     // Utility functions
-    StringArray split(const char *delimiters, String **output, size_t *size) const;
+    StringArray split(const char *delimiters) const;
     int to_integer() const;
     String& trim();
 
