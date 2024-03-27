@@ -1,4 +1,3 @@
-
 #ifndef STRING_ARRAY_H
 #define STRING_ARRAY_H
 
@@ -12,22 +11,23 @@ private:
     size_t elements;   // Number of elements in the array
 
 public:
-    // Constructors and destructor
+    //constructors and destructor
     StringArray();
     StringArray(size_t initialSize);
     StringArray(const StringArray& other);
     ~StringArray();
 
-    // Accessors
+    //getter
     size_t getSize() const;
 
-    // Element access
+    //element access
     String& operator[](size_t index);
     const String& operator[](size_t index) const;
+    //adds elements
+    void push_back(const String& str);
     /*
     // Modifiers
     void resize(size_t newSize);
-    void push_back(const String& str);
     void clear();
 
     // Utility functions
