@@ -4,16 +4,6 @@
 
 #include "port.h"
 #include <iostream>
-//#include <string.h>
-//#include "string.h"
-//#include "generic-field.h"
-//#include <cstring>
-
-//#define PORTAMNT 2
-
-#include "port.h"
-#include "string_array.h"
-#include <iostream> // For debugging
 
 // Constructor definition
 port::port(const String &Port) : port_name(Port), min_val(MINPORT), max_val(MAXPORT) {}
@@ -21,6 +11,7 @@ port::port(const String &Port) : port_name(Port), min_val(MINPORT), max_val(MAXP
 // set_value function definition
 bool port::set_value(String value) {
     // Set the value of the port
+    value = value.trim();
     int portValue = value.to_integer();
     if (portValue < MINPORT || portValue > MAXPORT) {
         std::cerr << "Error: Port value out of range" << std::endl;
@@ -31,8 +22,9 @@ bool port::set_value(String value) {
 }
 
 // match function definition
-bool port::match(String packet) {
-    StringArray packet_split = packet.split(",");//4 fields
+bool port::match(const GenericString& packet) const {
+    String const &packet_str = packet.as_string();
+    StringArray packet_split = packet_str.split(",");//4 fields
     for (int i = 0; i < packet_split.getSize(); i++) {
         StringArray ports = packet_split[i].split("=");//name & value
         if (ports.getSize() == 2) {
@@ -51,5 +43,4 @@ bool port::match(String packet) {
 port::~port() {
     // Destructor typically does not require explicit implementation
 }
-
 
