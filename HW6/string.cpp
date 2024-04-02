@@ -3,7 +3,7 @@
 //
 #include "generic-string.h"
 #include "string.h"
-#include "string_array.h"
+#include "string-array.h"
 #include <iostream>
 #include <string.h>
 #include <cstring>
