@@ -25,7 +25,7 @@ bool port::set_value(String value) {
 bool port::match(const GenericString& packet) const {
     String const &packet_str = packet.as_string();
     StringArray packet_split = packet_str.split(",");//4 fields
-    for (int i = 0; i < packet_split.getSize(); i++) {
+    for (unsigned int i = 0; i < packet_split.getSize(); i++) {
         StringArray ports = packet_split[i].split("=");//name & value
         if (ports.getSize() == 2) {
             String port = ports[0].trim();
