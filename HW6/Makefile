@@ -1,7 +1,7 @@
 CXX  =  g++
 CXXLINK  =  $(CXX)
 CXXFLAGS  =  -Wall -g -std=c++11
-OBJS  =  main.o string.o ip.o port.o
+OBJS  =  main.o string.o ip.o port.o string_array.o
 EXEC  =  firewall.exe
 
 $(EXEC): main.o libfirewall.so
