@@ -1,7 +1,7 @@
 //Lavie Lederman 319046504
 //Shahar Yankelovich 206159527
 //
-#include "string_array.h"
+#include "string-array.h"
 
 // Default constructor
 StringArray::StringArray() : array(nullptr), elements(0) {}
