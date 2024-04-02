@@ -8,7 +8,7 @@
 #define MINPORT 0
 #define MAXPORT 65535
 
-#include "string_array.h"
+#include "string-array.h"
 #include "string.h"
 #include "generic-field.h"
 
