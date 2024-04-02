@@ -1,7 +1,7 @@
 #ifndef IP_H
 #define IP_H
 
-#include "string_array.h"
+#include "string-array.h"
 #include "string.h"
 #include "generic-field.h"
 //ip is a class inheriting from GenericField.
