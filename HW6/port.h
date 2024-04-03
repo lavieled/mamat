@@ -18,7 +18,7 @@ class port : public GenericField{
     String port_name;
 
 public:
-    port(): min_val(MINPORT), max_val(MAXPORT), port_name(nullptr){}
+    port(): port_name(nullptr), min_val(MINPORT), max_val(MAXPORT){}
     port(const String &Port);
     bool match(const GenericString& packet) const;
     bool set_value(String value);
