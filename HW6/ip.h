@@ -14,7 +14,7 @@ public :
     ip(): ip_name(nullptr), mask_ip(0), mask_num(0){}
     ip(const String &ip);
     bool set_value(String value);
-    unsigned int ip_to_int(String &ip);
+    unsigned int ip_to_int(String &ip) const;
     bool match(const GenericString& packet) const;
     ~ip();
 };
