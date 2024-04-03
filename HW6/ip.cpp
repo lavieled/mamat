@@ -18,7 +18,7 @@ ip::ip(const String &ip) : GenericField(){
 ip::~ip(){}
 
 // set_value function definition
-unsigned int ip::ip_to_int(String &ip){
+unsigned int ip::ip_to_int(String &ip) const{
     StringArray ip_bytes;
     ip = ip.trim();
     ip_bytes = ip.split(".");
