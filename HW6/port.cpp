@@ -10,13 +10,17 @@ port::port(const String &Port) : port_name(Port), min_val(MINPORT), max_val(MAXP
 
 // set_value function definition
 bool port::set_value(String value) {
-    // Set the value of the port
-    value = value.trim();
-    int portValue = value.to_integer();
-    if (portValue < MINPORT || portValue > MAXPORT) {
+    //split to range
+    StringArray port_range = value.split("-");
+    unsigned short min = port_range[0].trim().to_integer();
+    unsigned short max = port_range[1].trim().to_integer();
+    if (min < MINPORT || max > MAXPORT) {
         std::cerr << "Error: Port value out of range" << std::endl;
         return false;
     }
+    //update params
+    min_val = min;
+    max_val = max;
     port_name = value;
     return true;
 }
