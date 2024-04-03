@@ -55,7 +55,7 @@ bool ip::match(const GenericString& packet) const {
     }//check for empty string
     //split to fields
     packet_split = packet_str.split(",");
-    for(int i=0; i < packet_split.getSize(); i++){
+    for(unsigned int i=0; i < packet_split.getSize(); i++){
         packet_split[i] = packet_split[i].trim();
         //split to name & value
         ip_addrs = packet_split[i].split("=");
