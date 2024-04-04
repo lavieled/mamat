@@ -41,6 +41,7 @@ String::String(const char *str){
 String::~String(){
         delete[] data;//free memory
 }
+
 //assigment operators
 String& String::operator=(const String &rhs){
     if(this != &rhs){
@@ -96,7 +97,7 @@ int String::to_integer() const {
 //cut out empty spaced on the outside of strings
 String& String::trim(){
     int left = 0;
-    int right = length - 1;
+    int right = (int)length - 1;
     //left white spaces
     while(data[left] == ' '){
         left++;
@@ -122,7 +123,7 @@ String& String::trim(){
     new_data[j] = '\0';
     //update string to leaner version, delete temp memory
     delete[] data;
-    length = new_length;
+    length = (size_t)new_length;
     data = new char[length + 1];// Allocate memory
     strcpy(data, new_data);// Copy data
     delete[] new_data;
