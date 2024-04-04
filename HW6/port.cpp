@@ -47,4 +47,3 @@ bool port::match(const GenericString& packet) const {
 port::~port() {
     // Destructor typically does not require explicit implementation
 }
-
