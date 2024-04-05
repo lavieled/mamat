@@ -13,9 +13,9 @@
 #include "generic-field.h"
 
 class port : public GenericField{
+    String port_name;
     unsigned short min_val;
     unsigned short max_val;
-    String port_name;
 
 public:
     port(): port_name(nullptr), min_val(MINPORT), max_val(MAXPORT){}
