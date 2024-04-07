@@ -415,15 +415,7 @@ float grades_calc_avg(struct grades *grades, int id, char **out) {
         *out = NULL;
         return FAILED;
     }
-    char *name = (char *) malloc(strlen
-            (student->student_name)* sizeof(char));
-    if (name == NULL) {
-        *out = NULL;
-        return FAILED;
-    }
-    name = clone_str(student->student_name);
-    *out = name;
-    free(name);
+    *out = clone_str(student->student_name);
     return (student->avg);
 }
 //prints the student
