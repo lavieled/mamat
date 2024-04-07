@@ -423,6 +423,7 @@ float grades_calc_avg(struct grades *grades, int id, char **out) {
     }
     name = clone_str(student->student_name);
     *out = name;
+    free(name);
     return (student->avg);
 }
 //prints the student
