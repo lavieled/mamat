@@ -6,37 +6,31 @@
 #define STRING_H
 
 #include "generic-string.h"
+#include "string-array.h"
 #include <cstring> // Include necessary header files
 
-
-class String : public GenericString{
+class String : public GenericString {
 private:
-    char *data; // Pointer to character array holding the string data
-    size_t length; // Length of the string
+    char* data;
+    size_t length;
 
 public:
-    // Constructors and destructor
-    String(); // Default constructor
-    String(const String &str); // Copy constructor
-    String(const char *str); // Constructor from C-style string
-    ~String(); // Destructor
+    // Constructor
+    String(const char* str);
+    String(const String& other);
 
-    // Overloaded assignment operators
-    String& operator=(const String &rhs);
-    String& operator=(const char *str) override;
+    // Destructor
+    ~String();
 
-    // Comparison operators
-    bool operator==(const GenericString &rhs) const;
-    bool operator==(const char *rhs) const override;
-
-    // Utility functions
-    StringArray split(const char *delimiters) const;
-    int to_integer() const;
-    String& trim();
-
-    // casting functions
-    String& as_string();
-    String& as_string() const;
+    // Implement methods from GenericString interface
+    StringArray split(const char* delimiters) const override;
+    GenericString& operator=(const char* str) override;
+    GenericString& trim() override;
+    bool operator==(const GenericString& other) const override;
+    bool operator==(const char* other) const override;
+    int to_integer() const override;
+    String& as_string() override;
+    const String& as_string() const override;
 };
 
-#endif // STRING_H
+#endif /* STRING_H */
