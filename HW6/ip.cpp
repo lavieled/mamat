@@ -24,7 +24,8 @@ unsigned int ip_to_int(const String& ip){
     StringArray ip_bytes = ip.split(".");
     unsigned int ip_int = 0;
     for (unsigned int i = 0; i < IPBYTES; i++) {
-        int curr = ip_bytes[i].as_string().to_integer();
+        String temp = ip_bytes[i].as_string();
+        int curr = temp.to_integer();
         if (curr < 0 || curr > 255) {
             // Invalid byte value
             return 0;
@@ -36,29 +37,22 @@ unsigned int ip_to_int(const String& ip){
 
 bool ip::set_value(String value) {
     StringArray ip_mask = value.split("/"); // Split values
-    /*if (ip_mask.getSize() != 2) {
-        std::cerr << "Invalid format: IP/mask expected." << std::endl;
+    if (ip_mask.getSize() != 2) {
         return false;
-    }
-    */
+  
     String ip_string = ip_mask[0].as_string(); // Convert GenericString to String
 
     unsigned int int_ip = ip_to_int(ip_string);
-    /*if (int_ip == 0) {
-        std::cerr << "Invalid IP address format." << std::endl;
-        return false;
-    }
-    */
+ 
     String mask_string = ip_mask[1].as_string(); // Convert GenericString to String
     int mask = mask_string.to_integer();
-    if (mask < 0 || mask > MAXMASK) {
-        //std::cerr << "Invalid mask value: " << mask << std::endl;
+    if (mask < 0 || mask > MAXMASK) {   
         return false;
     }
 
-    // Calculate the mask IP by shifting the IP address to the left by (MAXMASK - mask) bits
-    this->mask_num = mask;
-    this->mask_ip = int_ip & ((1u >> (MAXMASK - mask)) - 1);
+    // Calculate the mask IP by shifting the IP address to the right by (MAXMASK - mask) bits
+    mask_num = mask;
+    mask_ip = int_ip >> (MAXMASK - mask_num);
     return true;
 }
 
@@ -82,12 +76,12 @@ bool ip::match(const GenericString& packet) const {
         ip_n.trim();
         ip_v.trim();
 
-        if (ip_n == this->ip_name) {
+        if (ip_n == ip_name) {
             unsigned int curr_ip = ip_to_int(ip_v); // Convert GenericString to String
             // Apply the mask to the current IP address
-            unsigned int masked_curr_ip = curr_ip & ((1u >> (MAXMASK - mask_num)) - 1);
+            unsigned int masked_curr_ip = curr_ip >> (MAXMASK - mask_num);
             // Check if the masked IP matches the masked rule IP
-            if (masked_curr_ip == this->mask_ip) {
+            if (masked_curr_ip == mask_ip) {
                 return true;
             }
         }
