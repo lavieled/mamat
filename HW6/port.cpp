@@ -12,20 +12,13 @@ port::~port() {
 bool port::set_value(String value) {
     // Split the value into port range
     StringArray port_range = value.split("-");
-    /*
+    
     if (port_range.getSize() != 2) {
-        std::cerr << "Error: Invalid port range format" << std::endl;
         return false;
     }
-    */
+    
     unsigned short min = port_range[0].to_integer();
     unsigned short max = port_range[1].to_integer();
-    /*
-    if (min > max || min < MINPORT || max > MAXPORT) {
-        std::cerr << "Error: Port value out of range or invalid range format" << std::endl;
-        return false;
-    }
-    */
 
     // Update parameters
     min_val = min;
@@ -42,9 +35,9 @@ bool port::match(const GenericString& packet) const {
     for(unsigned int i = 0; i < packet_split.getSize(); i++) {
         String packet_split_str = packet_split[i].as_string();
         StringArray ports = packet_split_str.split("=");
-        /*if(ports.getSize() != 2) {
+        if(ports.getSize() != 2) {
             continue; // Skip this field if it doesn't match the expected format
-        }*/
+        }
         String port_n = ports[0].as_string();
         String port_v = ports[1].as_string();
         // Trim spaces from the name and value
@@ -54,7 +47,8 @@ bool port::match(const GenericString& packet) const {
         if(port_n == port_name) {
             int curr_port = port_v.to_integer();
             // Check if the port number meets the rule
-            if(curr_port >= this->min_val && curr_port <= this->max_val) {
+            if((curr_port >= min_val) && (curr_port <= max_val)) {
+
                 return true;
             }
         }
