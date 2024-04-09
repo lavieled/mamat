@@ -38,19 +38,22 @@ unsigned int ip_to_int(const String& ip){
 bool ip::set_value(String value) {
     StringArray ip_mask = value.split("/"); // Split values
     if (ip_mask.getSize() != 2) {
+        std::cerr << "Invalid format: IP/mask expected." << std::endl;
         return false;
-  
+    }
+    
     String ip_string = ip_mask[0].as_string(); // Convert GenericString to String
 
     unsigned int int_ip = ip_to_int(ip_string);
- 
+  
     String mask_string = ip_mask[1].as_string(); // Convert GenericString to String
     int mask = mask_string.to_integer();
-    if (mask < 0 || mask > MAXMASK) {   
+    if (mask < 0 || mask > MAXMASK) {
+        //std::cerr << "Invalid mask value: " << mask << std::endl;
         return false;
     }
 
-    // Calculate the mask IP by shifting the IP address to the right by (MAXMASK - mask) bits
+    // Calculate the mask IP by shifting the IP address to the left by (MAXMASK - mask) bits
     mask_num = mask;
     mask_ip = int_ip >> (MAXMASK - mask_num);
     return true;
