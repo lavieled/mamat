@@ -6,9 +6,18 @@
 #include "input.h"
 
 int main(int argc, char **argv) {
+if (argc != 2) {
+        std::cerr << "Usage: " << argv[0] << " <input>" << std::endl;
+        return 1;
+    }
 
     String input(argv[1]);
     StringArray rule = input.split("=");
+
+    if (rule.getSize() < 2) {
+        std::cerr << "Invalid input format: " << std::endl;
+        return 1;
+    }
 
     String name = rule[0].trim().as_string();
     String val = rule[1].trim().as_string();
