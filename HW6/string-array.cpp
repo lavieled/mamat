@@ -1,60 +1,40 @@
-//Lavie Lederman 319046504
-//Shahar Yankelovich 206159527
-//
 #include "string-array.h"
 
-// Default constructor
-StringArray::StringArray() : array(nullptr), elements(0) {}
-
-// Constructor with initial size
-StringArray::StringArray(size_t initialSize) : elements(initialSize) {
-    array = new String[initialSize];
-}
-
-// Copy constructor
-StringArray::StringArray(const StringArray& other) : elements(other.elements) {
-    array = new String[elements];
-    for (size_t i = 0; i < elements; ++i) {
-        array[i] = other.array[i];
-    }
-}
+// Constructor
+StringArray::StringArray() : strings(nullptr), size(0) {}
 
 // Destructor
 StringArray::~StringArray() {
-    delete[] array;
-}
-
-// Accessor for the size of the array
-size_t StringArray::getSize() const {
-    return elements;
-}
-
-// Element access operator for non-const objects
-String& StringArray::operator[](size_t index) {
-    return array[index];
-}
-
-// Element access operator for const objects
-const String& StringArray::operator[](size_t index) const {
-    return array[index];
-}
-//add element to array
-void StringArray::push_back(const String& str) {
-    // Create a new array with increased size
-    String* newArray = new String[elements + 1];
-
-    // Copy existing elements to the new array
-    for (size_t i = 0; i < elements; ++i) {
-        newArray[i] = array[i];
+    // Deallocate memory for each GenericString object in the array
+    /*for (size_t i = 0; i < size; ++i) {
+        delete strings[i];
     }
+    // Deallocate memory for the array itself
+    delete[] strings;
+    */
+    if (strings != nullptr) {
+            delete[] strings;
+        }
+}
 
-    // Add the new string at the end of the new array
-    newArray[elements] = str;
+// Add a string to the array
+void StringArray::add(GenericString* str) {
+    // Increase size of array
+    GenericString** temp = new GenericString*[size + 1];
+    for (size_t i = 0; i < size; ++i) {
+        temp[i] = strings[i];
+    }
+    temp[size++] = str;
+    // Update array pointer to point to the new array
+    strings = temp;
+}
 
-    // Delete the old array and update to the new array
-    delete[] array;
-    array = newArray;
+// Operator to access individual strings
+GenericString& StringArray::operator[](size_t index) {
+    return *strings[index];
+}
 
-    // Increment the number of elements
-    elements++;
+// Method to get the size of the array
+size_t StringArray::getSize() const {
+    return size;
 }
