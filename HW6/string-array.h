@@ -2,37 +2,29 @@
 #define STRING_ARRAY_H
 
 #include "string.h"
-#include "generic-string.h"
-#include <cstring>
+#include <cstddef> // Include <cstddef> for size_t
 
 class StringArray {
 private:
-    String* array; // Array of String objects
-    size_t elements;   // Number of elements in the array
+    GenericString** strings;
+    size_t size;
 
 public:
-    //constructors and destructor
+    // Constructor
     StringArray();
-    StringArray(size_t initialSize);
-    StringArray(const StringArray& other);
+
+    // Destructor
     ~StringArray();
 
-    //getter
+    // Add a string to the array
+    void add(GenericString* str);
+
+    // Operator to access individual strings
+    GenericString& operator[](size_t index); // Correct syntax for operator overloading
+
+    // Method to get the size of the array
     size_t getSize() const;
 
-    //element access
-    String& operator[](size_t index);
-    const String& operator[](size_t index) const;
-    //adds elements
-    void push_back(const String& str);
-    /*
-    // Modifiers
-    void resize(size_t newSize);
-    void clear();
-
-    // Utility functions
-    void print() const;
-     */
 };
 
-#endif // STRINGARRAY_H
+#endif /* STRING_ARRAY_H */
